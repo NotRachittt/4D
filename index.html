@@ -7,36 +7,47 @@ git push
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>4D / NotRachit — The Fourth Dimension</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The 4th Dimension</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:       #02020a;
-      --bg2:      #07071a;
-      --bg3:      #0d0d24;
-      --void:     #000008;
-      --gold:     #f5c518;
+      --bg: #02020a;
+      --bg2: #07071a;
+      --bg3: #0d0d24;
+      --void: #000008;
+      --gold: #f5c518;
       --gold-dim: #9a7c10;
       --gold-glow: rgba(245, 197, 24, 0.12);
       --gold-glow2: rgba(245, 197, 24, 0.04);
-      --blue:     #3a6fff;
+      --blue: #3a6fff;
       --blue-glow: rgba(58, 111, 255, 0.15);
-      --text:     #eeeaf8;
+      --text: #eeeaf8;
       --text-mid: #c4bedd;
       --text-dim: #7a7495;
-      --border:   rgba(245, 197, 24, 0.1);
+      --border: rgba(245, 197, 24, 0.1);
       --border-hi: rgba(245, 197, 24, 0.35);
-      --body:     'Poppins', sans-serif;
-      --mono:     'Space Mono', monospace;
-      --display:  'Bebas Neue', sans-serif;
+      --body: 'Poppins', sans-serif;
+      --mono: 'Space Mono', monospace;
+      --display: 'Bebas Neue', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
@@ -64,26 +75,37 @@ git push
       pointer-events: none;
       z-index: 0;
     }
+
     .orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(245,197,24,0.06) 0%, transparent 70%);
-      top: -200px; right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 197, 24, 0.06) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
     }
+
     .orb-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(58,111,255,0.07) 0%, transparent 70%);
-      bottom: 20%; left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(58, 111, 255, 0.07) 0%, transparent 70%);
+      bottom: 20%;
+      left: -150px;
     }
+
     .orb-3 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(245,197,24,0.04) 0%, transparent 70%);
-      bottom: -100px; right: 20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(245, 197, 24, 0.04) 0%, transparent 70%);
+      bottom: -100px;
+      right: 20%;
     }
 
     /* ── NAVBAR ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       height: 58px;
       display: flex;
@@ -135,7 +157,9 @@ git push
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0; right: 0;
+      bottom: -4px;
+      left: 0;
+      right: 0;
       height: 1px;
       background: var(--gold);
       transform: scaleX(0);
@@ -143,9 +167,14 @@ git push
     }
 
     .nav-links a:hover,
-    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
     .nav-links a:hover::after,
-    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
 
     .nav-badge {
       font-family: var(--mono);
@@ -187,8 +216,13 @@ git push
     }
 
     @keyframes ghostDrift {
-      from { transform: translateY(-50%) translateX(0); }
-      to   { transform: translateY(-52%) translateX(-0.5%); }
+      from {
+        transform: translateY(-50%) translateX(0);
+      }
+
+      to {
+        transform: translateY(-52%) translateX(-0.5%);
+      }
     }
 
     .hero-eyebrow {
@@ -206,7 +240,8 @@ git push
 
     .hero-eyebrow::before {
       content: '';
-      width: 40px; height: 1px;
+      width: 40px;
+      height: 1px;
       background: var(--gold);
       display: block;
       flex-shrink: 0;
@@ -225,7 +260,7 @@ git push
     .hero-title .accent {
       color: var(--gold);
       display: block;
-      text-shadow: 0 0 80px rgba(245,197,24,0.3);
+      text-shadow: 0 0 80px rgba(245, 197, 24, 0.3);
     }
 
     .hero-subtitle {
@@ -273,7 +308,7 @@ git push
 
     .btn-primary:hover {
       background: #ffd84d;
-      box-shadow: 0 0 30px rgba(245,197,24,0.4);
+      box-shadow: 0 0 30px rgba(245, 197, 24, 0.4);
       transform: translateY(-2px);
     }
 
@@ -295,7 +330,7 @@ git push
 
     .btn-ghost:hover {
       background: var(--gold-glow);
-      box-shadow: 0 0 20px rgba(245,197,24,0.1);
+      box-shadow: 0 0 20px rgba(245, 197, 24, 0.1);
       transform: translateY(-2px);
     }
 
@@ -322,7 +357,9 @@ git push
     }
 
     @keyframes scrollExpand {
-      to { width: 40px; }
+      to {
+        width: 40px;
+      }
     }
 
     /* ── SECTION DIVIDER ── */
@@ -358,7 +395,8 @@ git push
     .section-label::before {
       content: '';
       display: block;
-      width: 16px; height: 1px;
+      width: 16px;
+      height: 1px;
       background: var(--gold);
     }
 
@@ -407,8 +445,13 @@ git push
       transition: opacity 0.4s;
     }
 
-    .card:hover { background: var(--bg3); }
-    .card:hover::before { opacity: 1; }
+    .card:hover {
+      background: var(--bg3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
 
     .card-num {
       font-family: var(--display);
@@ -420,7 +463,9 @@ git push
       transition: color 0.3s;
     }
 
-    .card:hover .card-num { color: rgba(245,197,24,0.25); }
+    .card:hover .card-num {
+      color: rgba(245, 197, 24, 0.25);
+    }
 
     .card-title {
       font-family: var(--mono);
@@ -464,16 +509,23 @@ git push
       transition: background 0.25s;
     }
 
-    .row-item:last-child { border-bottom: none; }
-    .row-item:hover { background: var(--bg3); }
+    .row-item:last-child {
+      border-bottom: none;
+    }
 
-    .row-item > div {
+    .row-item:hover {
+      background: var(--bg3);
+    }
+
+    .row-item>div {
       padding: 1.25rem 1.5rem;
       border-right: 1px solid var(--border);
       font-size: 0.82rem;
     }
 
-    .row-item > div:last-child { border-right: none; }
+    .row-item>div:last-child {
+      border-right: none;
+    }
 
     .row-idx {
       font-family: var(--mono);
@@ -535,19 +587,24 @@ git push
       transition: background 0.25s;
     }
 
-    .stat-box:hover { background: var(--bg3); }
+    .stat-box:hover {
+      background: var(--bg3);
+    }
 
     .stat-box::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0;
+      bottom: 0;
+      left: 0;
       height: 2px;
       width: 0%;
       background: var(--gold);
       transition: width 0.5s ease;
     }
 
-    .stat-box:hover::after { width: 100%; }
+    .stat-box:hover::after {
+      width: 100%;
+    }
 
     .stat-num {
       font-family: var(--display);
@@ -556,7 +613,7 @@ git push
       letter-spacing: -0.02em;
       line-height: 1;
       margin-bottom: 0.5rem;
-      text-shadow: 0 0 40px rgba(245,197,24,0.2);
+      text-shadow: 0 0 40px rgba(245, 197, 24, 0.2);
     }
 
     .stat-label {
@@ -600,8 +657,13 @@ git push
     }
 
     @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
     }
 
     /* ── FOOTER ── */
@@ -614,7 +676,7 @@ git push
       gap: 1.5rem;
       position: relative;
       z-index: 1;
-      background: rgba(2,2,10,0.6);
+      background: rgba(2, 2, 10, 0.6);
     }
 
     .footer-logo {
@@ -640,7 +702,9 @@ git push
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--gold); }
+    .footer-links a:hover {
+      color: var(--gold);
+    }
 
     .footer-copy {
       font-family: var(--mono);
@@ -661,8 +725,15 @@ git push
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ── SCAN LINE OVERLAY ── */
@@ -670,31 +741,60 @@ git push
       content: '';
       position: fixed;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px);
       pointer-events: none;
       z-index: 200;
     }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      nav { padding: 0 1.25rem; }
-      .nav-links { display: none; }
-      .hero { padding: 6rem 1.25rem 4rem; }
-      section { padding: 4rem 1.25rem; }
-      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
-      .row-item { grid-template-columns: 50px 1fr; }
-      .row-detail { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .footer-links { flex-wrap: wrap; gap: 1rem; }
+      nav {
+        padding: 0 1.25rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 6rem 1.25rem 4rem;
+      }
+
+      section {
+        padding: 4rem 1.25rem;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .row-item {
+        grid-template-columns: 50px 1fr;
+      }
+
+      .row-detail {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- STARFIELD -->
@@ -709,10 +809,11 @@ git push
   <nav>
     <a href="#" class="nav-logo">4D <span>/ NOTRACHIT</span></a>
     <ul class="nav-links">
-      <li><a href="#section-1">Section 1</a></li>
-      <li><a href="#section-2">Section 2</a></li>
-      <li><a href="#section-3">Section 3</a></li>
-      <li><a href="#section-4">Section 4</a></li>
+      <li><a href="#section-1">Newtonian Mechanics</a></li>
+      <li><a href="#section-2">General Relativity</a></li>
+      <li><a href="#section-3">Special Relativity</a></li>
+      <li><a href="#section-4">Higher Dimensions</a></li>
+      <li><a href="#section-4">String Theory</a></li>
     </ul>
     <div class="nav-badge">Your Badge</div>
   </nav>
@@ -723,17 +824,20 @@ git push
     <p class="hero-eyebrow">Eyebrow text · Subtitle · Context</p>
     <h1 class="hero-title">
       The
-      <span class="accent">4D</span>
+      <span class="accent">4th Dimension</span>
     </h1>
     <p class="hero-subtitle">Special Relativity · General Relativity · Quantum</p>
     <p class="hero-desc">
-      A personal thesis website exploring the fourth dimension through special relativity, general relativity, and quantum mechanics.
+      A personal thesis website exploring the fourth dimension through special relativity, general relativity, and
+      quantum mechanics.
     </p>
     <div class="hero-actions">
       <a href="#section-1" class="btn-primary">Primary CTA</a>
       <a href="#section-3" class="btn-ghost">Secondary CTA</a>
     </div>
-    <div class="hero-scroll"><div class="scroll-line"></div> Scroll to explore</div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div> Scroll to explore
+    </div>
   </div>
 
   <!-- TICKER -->
@@ -806,22 +910,30 @@ git push
     <div class="row-list">
       <div class="row-item">
         <div class="row-idx">01</div>
-        <div><div class="row-name">Item Name</div></div>
+        <div>
+          <div class="row-name">Item Name</div>
+        </div>
         <div class="row-detail">Detail or description of this item goes here.</div>
       </div>
       <div class="row-item">
         <div class="row-idx">02</div>
-        <div><div class="row-name">Item Name</div></div>
+        <div>
+          <div class="row-name">Item Name</div>
+        </div>
         <div class="row-detail">Detail or description of this item goes here.</div>
       </div>
       <div class="row-item">
         <div class="row-idx">03</div>
-        <div><div class="row-name">Item Name</div></div>
+        <div>
+          <div class="row-name">Item Name</div>
+        </div>
         <div class="row-detail">Detail or description of this item goes here.</div>
       </div>
       <div class="row-item">
         <div class="row-idx">04</div>
-        <div><div class="row-name">Item Name</div></div>
+        <div>
+          <div class="row-name">Item Name</div>
+        </div>
         <div class="row-detail">Detail or description of this item goes here.</div>
       </div>
     </div>
@@ -908,7 +1020,7 @@ git push
       let stars = [];
 
       function resize() {
-        canvas.width  = window.innerWidth;
+        canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       }
 
@@ -955,4 +1067,5 @@ git push
   </script>
 
 </body>
+
 </html>
