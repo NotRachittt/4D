@@ -1,32 +1,32 @@
-<!-- 
- git add .
-git commit -m "update"
-git push 
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Page Title</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <title>4D / NotRachit — The Fourth Dimension</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0a;
-      --bg2: #111111;
-      --bg3: #181818;
-      --yellow: #f5c518;
-      --yellow-dim: #c49a10;
-      --yellow-glow: rgba(245, 197, 24, 0.08);
-      --text: #e8e0c8;
-      --text-muted: #7a7060;
-      --border: rgba(245, 197, 24, 0.15);
-      --border-bright: rgba(245, 197, 24, 0.4);
-      --body: 'DM Sans', sans-serif;
-      --display: 'Syne', sans-serif;
+      --bg:       #02020a;
+      --bg2:      #07071a;
+      --bg3:      #0d0d24;
+      --void:     #000008;
+      --gold:     #f5c518;
+      --gold-dim: #9a7c10;
+      --gold-glow: rgba(245, 197, 24, 0.12);
+      --gold-glow2: rgba(245, 197, 24, 0.04);
+      --blue:     #3a6fff;
+      --blue-glow: rgba(58, 111, 255, 0.15);
+      --text:     #eeeaf8;
+      --text-mid: #c4bedd;
+      --text-dim: #7a7495;
+      --border:   rgba(245, 197, 24, 0.1);
+      --border-hi: rgba(245, 197, 24, 0.35);
+      --body:     'Poppins', sans-serif;
+      --mono:     'Space Mono', monospace;
+      --display:  'Bebas Neue', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -38,322 +38,460 @@ git push
       font-size: 15px;
       line-height: 1.7;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ─── NAVBAR ─── */
+    /* ── CANVAS STARFIELD ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(245,197,24,0.06) 0%, transparent 70%);
+      top: -200px; right: -200px;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(58,111,255,0.07) 0%, transparent 70%);
+      bottom: 20%; left: -150px;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(245,197,24,0.04) 0%, transparent 70%);
+      bottom: -100px; right: 20%;
+    }
+
+    /* ── NAVBAR ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(10, 10, 10, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      height: 60px;
+      height: 58px;
       display: flex;
       align-items: center;
       padding: 0 2.5rem;
       justify-content: space-between;
+      background: rgba(2, 2, 10, 0.8);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
       font-family: var(--display);
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--yellow);
-      letter-spacing: -0.02em;
+      font-size: 1.6rem;
+      color: var(--gold);
       text-decoration: none;
+      letter-spacing: 0.04em;
+      line-height: 1;
     }
 
-    .nav-logo span { color: var(--text); font-weight: 400; }
+    .nav-logo span {
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.5rem;
+      letter-spacing: 0.08em;
+    }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
-      color: var(--text-muted);
+      color: var(--text-dim);
       text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 400;
-      letter-spacing: 0.03em;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
     }
 
     .nav-links a:hover,
-    .nav-links a.active { color: var(--yellow); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); }
 
     .nav-badge {
-      font-size: 0.72rem;
-      color: var(--yellow);
-      border: 1px solid var(--border-bright);
-      padding: 3px 10px;
-      letter-spacing: 0.08em;
-      font-family: var(--body);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      border: 1px solid var(--border-hi);
+      padding: 4px 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold-glow2);
     }
 
-    /* ─── HERO ─── */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 6rem 2.5rem 4rem;
+      padding: 7rem 2.5rem 5rem;
       position: relative;
       overflow: hidden;
     }
 
-    .hero::before {
-      content: attr(data-bg);
+    /* Huge ghost text */
+    .hero-ghost {
       position: absolute;
-      right: -0.05em;
+      right: -0.02em;
       top: 50%;
       transform: translateY(-50%);
       font-family: var(--display);
-      font-weight: 800;
-      font-size: clamp(10rem, 28vw, 26rem);
+      font-size: clamp(12rem, 32vw, 30rem);
       color: transparent;
-      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.05);
+      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.04);
       pointer-events: none;
       line-height: 1;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.02em;
+      user-select: none;
+      animation: ghostDrift 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes ghostDrift {
+      from { transform: translateY(-50%) translateX(0); }
+      to   { transform: translateY(-52%) translateX(-0.5%); }
     }
 
     .hero-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--yellow);
-      margin-bottom: 1.25rem;
-      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--gold);
+      display: block;
+      flex-shrink: 0;
     }
 
     .hero-title {
       font-family: var(--display);
-      font-weight: 800;
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      line-height: 1.0;
-      letter-spacing: -0.03em;
+      font-size: clamp(4rem, 10vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
       color: var(--text);
-      max-width: 14ch;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
     }
 
-    .hero-title em { color: var(--yellow); font-style: normal; }
+    .hero-title .accent {
+      color: var(--gold);
+      display: block;
+      text-shadow: 0 0 80px rgba(245,197,24,0.3);
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
 
     .hero-desc {
-      max-width: 50ch;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      max-width: 46ch;
+      color: var(--text-mid);
+      font-size: 0.92rem;
       font-weight: 300;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
+      line-height: 1.9;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.8s 0.2s ease both;
     }
 
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.28s ease both;
+    }
 
     .btn-primary {
-      background: var(--yellow);
-      color: #0a0a0a;
-      padding: 0.7rem 1.75rem;
-      font-family: var(--body);
-      font-size: 0.82rem;
-      font-weight: 500;
+      background: var(--gold);
+      color: #02020a;
+      padding: 0.75rem 2rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
       display: inline-block;
     }
 
-    .btn-primary:hover { background: #ffd84d; transform: translateY(-1px); }
+    .btn-primary:hover {
+      background: #ffd84d;
+      box-shadow: 0 0 30px rgba(245,197,24,0.4);
+      transform: translateY(-2px);
+    }
 
     .btn-ghost {
       background: transparent;
-      color: var(--yellow);
-      padding: 0.7rem 1.75rem;
-      font-family: var(--body);
-      font-size: 0.82rem;
+      color: var(--gold);
+      padding: 0.75rem 2rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
       font-weight: 400;
       text-decoration: none;
-      border: 1px solid var(--border-bright);
+      border: 1px solid var(--border-hi);
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
       display: inline-block;
     }
 
-    .btn-ghost:hover { background: var(--yellow-glow); transform: translateY(-1px); }
+    .btn-ghost:hover {
+      background: var(--gold-glow);
+      box-shadow: 0 0 20px rgba(245,197,24,0.1);
+      transform: translateY(-2px);
+    }
 
     .hero-scroll {
       position: absolute;
       bottom: 2.5rem;
       left: 2.5rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-dim);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-weight: 300;
+      gap: 1rem;
+      animation: fadeUp 0.8s 0.5s ease both;
     }
 
-    .hero-scroll::before {
-      content: '';
-      display: block;
-      width: 36px;
+    .scroll-line {
+      width: 0;
       height: 1px;
-      background: var(--border-bright);
+      background: var(--gold);
+      animation: scrollExpand 1.5s 1.2s ease forwards;
     }
 
-    /* ─── DIVIDER ─── */
-    .divider { width: 100%; height: 1px; background: var(--border); }
+    @keyframes scrollExpand {
+      to { width: 40px; }
+    }
 
-    /* ─── SECTIONS ─── */
+    /* ── SECTION DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hi) 30%, var(--border-hi) 70%, transparent);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── SECTIONS ── */
     section {
-      padding: 5.5rem 2.5rem;
+      padding: 6rem 2.5rem;
       max-width: 1100px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .section-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--yellow);
-      margin-bottom: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 0.7rem;
-      font-weight: 400;
+      gap: 0.8rem;
     }
 
     .section-label::before {
       content: '';
       display: block;
-      width: 20px;
-      height: 1px;
-      background: var(--yellow);
+      width: 16px; height: 1px;
+      background: var(--gold);
     }
 
     .section-title {
       font-family: var(--display);
-      font-weight: 700;
-      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
-      letter-spacing: -0.02em;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.03em;
       color: var(--text);
-      margin-bottom: 0.75rem;
-      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      line-height: 0.95;
     }
 
     .section-sub {
-      color: var(--text-muted);
-      font-size: 0.9rem;
+      color: var(--text-mid);
+      font-size: 0.88rem;
       font-weight: 300;
-      max-width: 52ch;
-      line-height: 1.8;
-      margin-bottom: 3rem;
+      max-width: 50ch;
+      line-height: 1.9;
+      margin-bottom: 3.5rem;
+      margin-top: 0.75rem;
     }
 
-    /* ─── CARD GRID (reusable) ─── */
+    /* ── CARD GRID ── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1px;
       background: var(--border);
-      border: 1px solid var(--border);
     }
 
     .card {
-      background: var(--bg);
-      padding: 1.75rem;
-      transition: background 0.25s;
+      background: var(--bg2);
+      padding: 2rem;
+      transition: background 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, var(--gold-glow) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
     }
 
     .card:hover { background: var(--bg3); }
+    .card:hover::before { opacity: 1; }
 
     .card-num {
       font-family: var(--display);
-      font-weight: 800;
-      font-size: 2.5rem;
-      color: rgba(245, 197, 24, 0.1);
+      font-size: 3.5rem;
+      color: rgba(245, 197, 24, 0.07);
       line-height: 1;
-      margin-bottom: 0.85rem;
-      letter-spacing: -0.04em;
-      transition: color 0.25s;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
     }
 
-    .card:hover .card-num { color: rgba(245, 197, 24, 0.35); }
+    .card:hover .card-num { color: rgba(245,197,24,0.25); }
 
     .card-title {
-      font-family: var(--display);
-      font-weight: 600;
-      font-size: 1rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--text);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
     .card-desc {
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.7;
+      color: var(--text-mid);
+      line-height: 1.8;
     }
 
     .card-tag {
       display: inline-block;
-      margin-top: 1.1rem;
-      font-size: 0.67rem;
-      letter-spacing: 0.1em;
+      margin-top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--yellow-dim);
+      color: var(--gold-dim);
       border: 1px solid var(--border);
-      padding: 3px 9px;
-      font-weight: 400;
+      padding: 3px 10px;
     }
 
-    /* ─── ROW LIST (reusable) ─── */
+    /* ── ROW LIST ── */
     .row-list {
       border: 1px solid var(--border);
+      background: var(--bg2);
     }
 
     .row-item {
       display: grid;
-      grid-template-columns: 60px 1fr 1.5fr;
+      grid-template-columns: 70px 1fr 1.5fr;
       border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
+      transition: background 0.25s;
     }
 
     .row-item:last-child { border-bottom: none; }
     .row-item:hover { background: var(--bg3); }
 
     .row-item > div {
-      padding: 1.1rem 1.4rem;
+      padding: 1.25rem 1.5rem;
       border-right: 1px solid var(--border);
-      font-size: 0.83rem;
+      font-size: 0.82rem;
     }
 
     .row-item > div:last-child { border-right: none; }
 
     .row-idx {
-      color: var(--yellow);
-      font-weight: 500;
-      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
     }
 
     .row-name {
+      font-family: var(--mono);
       color: var(--text);
-      font-weight: 500;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .row-detail {
-      color: var(--text-muted);
+      color: var(--text-mid);
       font-weight: 300;
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 0.82rem;
     }
 
-    /* ─── TWO COL ─── */
+    /* ── TWO COL ── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -362,94 +500,188 @@ git push
     }
 
     .prose p {
-      color: var(--text-muted);
+      color: var(--text-mid);
       font-size: 0.9rem;
       font-weight: 300;
-      line-height: 1.9;
-      margin-bottom: 1.1rem;
+      line-height: 2;
+      margin-bottom: 1.2rem;
     }
 
-    .prose p strong { color: var(--yellow); font-weight: 500; }
+    .prose p strong {
+      color: var(--gold);
+      font-weight: 500;
+    }
 
-    /* ─── STAT BOXES ─── */
+    /* ── STAT GRID ── */
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1px;
       background: var(--border);
-      border: 1px solid var(--border);
     }
 
     .stat-box {
-      background: var(--bg);
-      padding: 1.5rem;
+      background: var(--bg2);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
     }
+
+    .stat-box:hover { background: var(--bg3); }
+
+    .stat-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--gold);
+      transition: width 0.5s ease;
+    }
+
+    .stat-box:hover::after { width: 100%; }
 
     .stat-num {
       font-family: var(--display);
-      font-weight: 800;
-      font-size: 2.2rem;
-      color: var(--yellow);
-      letter-spacing: -0.04em;
+      font-size: 3rem;
+      color: var(--gold);
+      letter-spacing: -0.02em;
       line-height: 1;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 40px rgba(245,197,24,0.2);
     }
 
     .stat-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      font-weight: 400;
+      color: var(--text-dim);
     }
 
-    /* ─── FOOTER ─── */
+    /* ── TICKER / MARQUEE ── */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--void);
+      padding: 0.65rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .ticker-item span {
+      color: var(--gold);
+      margin: 0 0.5rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 1.5rem 2.5rem;
+      padding: 2rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+      background: rgba(2,2,10,0.6);
     }
 
     .footer-logo {
       font-family: var(--display);
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--yellow);
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
     }
 
     .footer-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       list-style: none;
     }
 
     .footer-links a {
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
       text-decoration: none;
-      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--yellow); }
+    .footer-links a:hover { color: var(--gold); }
 
     .footer-copy {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-weight: 300;
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
     }
 
-    /* ─── MOBILE ─── */
+    /* ── FORMULA DECORATION ── */
+    .formula {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      margin-top: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCAN LINE OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
       .nav-links { display: none; }
-      .hero { padding: 5rem 1.25rem 3rem; }
-      section { padding: 3.5rem 1.25rem; }
+      .hero { padding: 6rem 1.25rem 4rem; }
+      section { padding: 4rem 1.25rem; }
       .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
-      .row-item { grid-template-columns: 48px 1fr; }
+      .row-item { grid-template-columns: 50px 1fr; }
       .row-detail { display: none; }
       footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .footer-links { flex-wrap: wrap; gap: 1rem; }
@@ -458,9 +690,17 @@ git push
 </head>
 <body>
 
+  <!-- STARFIELD -->
+  <canvas id="stars"></canvas>
+
+  <!-- GLOW ORBS -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
   <!-- NAVBAR -->
   <nav>
-    <a href="#" class="nav-logo"> 4D <span>/ NotRachit</span></a>
+    <a href="#" class="nav-logo">4D <span>/ NOTRACHIT</span></a>
     <ul class="nav-links">
       <li><a href="#section-1">Section 1</a></li>
       <li><a href="#section-2">Section 2</a></li>
@@ -471,9 +711,14 @@ git push
   </nav>
 
   <!-- HERO -->
-  <div class="hero" data-bg="BG">
+  <div class="hero">
+    <div class="hero-ghost" aria-hidden="true">4D</div>
     <p class="hero-eyebrow">Eyebrow text · Subtitle · Context</p>
-    <h1 class="hero-title">The <em>4D</em> Dimension</h1>
+    <h1 class="hero-title">
+      The
+      <span class="accent">4D</span>
+    </h1>
+    <p class="hero-subtitle">Special Relativity · General Relativity · Quantum</p>
     <p class="hero-desc">
       A personal thesis website exploring the fourth dimension through special relativity, general relativity, and quantum mechanics.
     </p>
@@ -481,7 +726,30 @@ git push
       <a href="#section-1" class="btn-primary">Primary CTA</a>
       <a href="#section-3" class="btn-ghost">Secondary CTA</a>
     </div>
-    <div class="hero-scroll">Scroll to explore</div>
+    <div class="hero-scroll"><div class="scroll-line"></div> Scroll to explore</div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Special Relativity<span>—</span></span>
+      <span class="ticker-item">E = mc²<span>—</span></span>
+      <span class="ticker-item">General Relativity<span>—</span></span>
+      <span class="ticker-item">Spacetime Curvature<span>—</span></span>
+      <span class="ticker-item">Quantum Mechanics<span>—</span></span>
+      <span class="ticker-item">4th Dimension<span>—</span></span>
+      <span class="ticker-item">Lorentz Transform<span>—</span></span>
+      <span class="ticker-item">Wave Function<span>—</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Special Relativity<span>—</span></span>
+      <span class="ticker-item">E = mc²<span>—</span></span>
+      <span class="ticker-item">General Relativity<span>—</span></span>
+      <span class="ticker-item">Spacetime Curvature<span>—</span></span>
+      <span class="ticker-item">Quantum Mechanics<span>—</span></span>
+      <span class="ticker-item">4th Dimension<span>—</span></span>
+      <span class="ticker-item">Lorentz Transform<span>—</span></span>
+      <span class="ticker-item">Wave Function<span>—</span></span>
+    </div>
   </div>
 
   <div class="divider"></div>
@@ -559,11 +827,12 @@ git push
     <p class="section-label">Label</p>
     <h2 class="section-title">Section Heading</h2>
 
-    <div class="two-col">
+    <div class="two-col" style="margin-top:2.5rem">
       <div class="prose">
         <p>First paragraph of your text content. Use <strong>highlighted text</strong> to emphasize key ideas.</p>
         <p>Second paragraph. Keep paragraphs short and readable. Replace all of this with your actual content.</p>
         <p>Third paragraph if needed. Otherwise remove it.</p>
+        <p class="formula">ds² = −c²dt² + dx² + dy² + dz²</p>
       </div>
 
       <div class="stat-grid">
@@ -613,7 +882,7 @@ git push
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Site Title</div>
+    <div class="footer-logo">4D</div>
     <ul class="footer-links">
       <li><a href="#section-1">Section 1</a></li>
       <li><a href="#section-2">Section 2</a></li>
@@ -621,15 +890,59 @@ git push
       <li><a href="#section-4">Section 4</a></li>
       <li><a href="https://github.com" target="_blank">GitHub ↗</a></li>
     </ul>
-    <div class="footer-copy">© 2026 Your Name</div>
+    <div class="footer-copy">© 2026 NotRachit</div>
   </footer>
 
   <script>
+    /* ── STARFIELD ── */
+    (function () {
+      const canvas = document.getElementById('stars');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function createStars(n) {
+        stars = [];
+        for (let i = 0; i < n; i++) {
+          stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 0.9 + 0.1,
+            a: Math.random(),
+            speed: Math.random() * 0.004 + 0.001,
+            phase: Math.random() * Math.PI * 2
+          });
+        }
+      }
+
+      function draw(t) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+          const alpha = s.a * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(220,215,255,${alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      createStars(200);
+      window.addEventListener('resize', () => { resize(); createStars(200); });
+      requestAnimationFrame(draw);
+    })();
+
+    /* ── NAV ACTIVE ── */
     const links = document.querySelectorAll('.nav-links a');
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
       links.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
     });
   </script>
