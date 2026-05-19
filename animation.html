@@ -1,0 +1,181 @@
+<canvas id="c" width="500" height="500" style="display:block;margin:auto;border-radius:24px;border:3px solid #5ba4f5;box-shadow:0 0 0 6px #1a3a6e, #5ba4f5;background:#111;"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 500, H = 500;
+const cx = W/2, cy = H/2;
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.arcTo(x+w, y, x+w, y+r, r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.arcTo(x+w, y+h, x+w-r, y+h, r);
+  ctx.lineTo(x+r, y+h);
+  ctx.arcTo(x, y+h, x, y+h-r, r);
+  ctx.lineTo(x, y+r);
+  ctx.arcTo(x, y, x+r, y, r);
+  ctx.closePath();
+}
+
+function drawArrowhead(x, y, dir, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  if (dir === 'up') {
+    ctx.moveTo(x, y);
+    ctx.lineTo(x-5, y+10);
+    ctx.lineTo(x+5, y+10);
+  } else {
+    ctx.moveTo(x, y);
+    ctx.lineTo(x-10, y-5);
+    ctx.lineTo(x-10, y+5);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawMan(x, groundY, color) {
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  const headR = 15;
+  const headY = groundY - 60;
+  ctx.beginPath();
+  ctx.arc(x, headY, headR, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(x, headY + headR);
+  ctx.lineTo(x, headY + headR + 22);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, headY + headR + 7);
+  ctx.lineTo(x - 22, headY + headR + 20);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, headY + headR + 7);
+  ctx.lineTo(x + 22, headY + headR + 20);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, headY + headR + 22);
+  ctx.lineTo(x - 16, groundY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, headY + headR + 24);
+  ctx.lineTo(x + 16, groundY);
+  ctx.stroke();
+}
+
+const ease = p => p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+
+const manX = cx - 60;
+const groundY = cy;
+
+const boxW = 50, boxH = 50;
+
+// Box rests on the positive X axis, in front of man
+// "On the X axis" means its bottom sits at groundY, center at some +x from man
+const baseX = manX + 130;
+const baseY = groundY - 50/2; // center Y so box sits on axis
+
+// Animation: total cycle 360 frames (~6s at 60fps, a bit slower than before)
+// Sequence: rest(30) → up(70) → back(50) → rest(20) → right(70) → back(50) → rest(20) → left(70) → back(50) → rest(20) → down(70) → back(50) → rest(10)
+const SEQ = [
+  { dur: 30,  dx: 0,   dy: 0   }, // rest at origin
+  { dur: 70,  dx: 0,   dy: -65 }, // go up
+  { dur: 50,  dx: 0,   dy: 0   }, // return
+  { dur: 20,  dx: 0,   dy: 0   }, // rest
+  { dur: 70,  dx: 65,  dy: 0   }, // go right
+  { dur: 50,  dx: 0,   dy: 0   }, // return
+  { dur: 20,  dx: 0,   dy: 0   }, // rest
+  { dur: 70,  dx: -65, dy: 0   }, // go left
+  { dur: 50,  dx: 0,   dy: 0   }, // return
+  { dur: 20,  dx: 0,   dy: 0   }, // rest
+  { dur: 70,  dx: 0,   dy: 55  }, // go down (limited by axis)
+  { dur: 50,  dx: 0,   dy: 0   }, // return
+  { dur: 20,  dx: 0,   dy: 0   }, // rest
+];
+
+const totalDur = SEQ.reduce((s,x)=>s+x.dur, 0);
+
+// Precompute cumulative starts
+let cumulative = [];
+let acc = 0;
+for (let s of SEQ) { cumulative.push(acc); acc += s.dur; }
+
+function getBoxOffset(frame) {
+  const f = frame % totalDur;
+  // Find which segment we're in
+  let seg = SEQ.length - 1;
+  for (let i = 0; i < SEQ.length; i++) {
+    if (f < cumulative[i] + SEQ[i].dur) { seg = i; break; }
+  }
+  const s = SEQ[seg];
+  const localF = f - cumulative[seg];
+  const p = ease(localF / s.dur);
+
+  // For move segments (even index>=1), interpolate from prev endpoint to this endpoint
+  // prev endpoint is always (0,0) for return segs, or the displacement for move segs
+  let prevDx = 0, prevDy = 0;
+  if (seg > 0) {
+    const ps = SEQ[seg-1];
+    prevDx = ps.dx; prevDy = ps.dy;
+  }
+
+  const dx = prevDx + (s.dx - prevDx) * p;
+  const dy = prevDy + (s.dy - prevDy) * p;
+  return { dx, dy };
+}
+
+let frame = 0;
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.fillStyle = '#111';
+  roundRect(ctx, 0, 0, W, H, 24);
+  ctx.fill();
+
+  const axisColor = 'rgba(255,255,255,0.9)';
+  ctx.strokeStyle = axisColor;
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(60, cy);
+  ctx.lineTo(W-60, cy);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(cx, 60);
+  ctx.lineTo(cx, H-60);
+  ctx.stroke();
+
+  drawArrowhead(cx, 60, 'up', axisColor);
+  drawArrowhead(W-60, cy, 'right', axisColor);
+
+  ctx.fillStyle = axisColor;
+  ctx.font = '13px sans-serif';
+  ctx.fillText('Y', cx+8, 74);
+  ctx.fillText('X', W-55, cy-8);
+
+  drawMan(manX, groundY, axisColor);
+
+  const { dx, dy } = getBoxOffset(frame);
+  const bx = baseX + dx;
+  const by = baseY + dy;
+
+  const glowAlpha = 0.22 + 0.08 * Math.sin(frame * 0.09);
+  ctx.save();
+  ctx.shadowColor = `rgba(91,164,245,${glowAlpha})`;
+  ctx.shadowBlur = 16;
+  ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, bx - boxW/2, by - boxH/2, boxW, boxH, 5);
+  ctx.stroke();
+  ctx.restore();
+
+  frame++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
