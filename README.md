@@ -6,7 +6,7 @@
 
 ## 🔗 Live Site
 
-[View Website](https://notrachittt.github.io/4D/) 
+[View Website](https://notrachittt.github.io/4D/) <- Click to view
 
 ---
 
