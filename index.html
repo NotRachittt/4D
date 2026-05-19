@@ -1,28 +1,12 @@
-<!-- 
-git add .
-git commit -m "update"
-git push
- -->
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The 4th Dimension</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg: #02020a;
@@ -31,23 +15,21 @@ git push
       --void: #000008;
       --gold: #f5c518;
       --gold-dim: #9a7c10;
-      --gold-glow: rgba(245, 197, 24, 0.12);
-      --gold-glow2: rgba(245, 197, 24, 0.04);
+      --gold-glow: rgba(245,197,24,0.12);
+      --gold-glow2: rgba(245,197,24,0.04);
       --blue: #3a6fff;
-      --blue-glow: rgba(58, 111, 255, 0.15);
       --text: #eeeaf8;
       --text-mid: #c4bedd;
       --text-dim: #7a7495;
-      --border: rgba(245, 197, 24, 0.1);
-      --border-hi: rgba(245, 197, 24, 0.35);
+      --border: rgba(245,197,24,0.1);
+      --border-hi: rgba(245,197,24,0.35);
+      --sidebar-w: 260px;
       --body: 'Poppins', sans-serif;
       --mono: 'Space Mono', monospace;
       --display: 'Bebas Neue', sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -71,120 +53,208 @@ git push
     .orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
+      filter: blur(130px);
       pointer-events: none;
       z-index: 0;
     }
+    .orb-1 { width:600px; height:600px; background:radial-gradient(circle,rgba(245,197,24,0.05) 0%,transparent 70%); top:-200px; right:-200px; }
+    .orb-2 { width:500px; height:500px; background:radial-gradient(circle,rgba(58,111,255,0.06) 0%,transparent 70%); bottom:20%; left:-150px; }
+    .orb-3 { width:400px; height:400px; background:radial-gradient(circle,rgba(245,197,24,0.03) 0%,transparent 70%); bottom:-100px; right:20%; }
 
-    .orb-1 {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(245, 197, 24, 0.06) 0%, transparent 70%);
-      top: -200px;
-      right: -200px;
+    /* ── SCAN LINE ── */
+    body::after {
+      content:'';
+      position:fixed;
+      inset:0;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
+      pointer-events:none;
+      z-index:200;
     }
 
-    .orb-2 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(58, 111, 255, 0.07) 0%, transparent 70%);
-      bottom: 20%;
-      left: -150px;
-    }
-
-    .orb-3 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(245, 197, 24, 0.04) 0%, transparent 70%);
-      bottom: -100px;
-      right: 20%;
-    }
-
-    /* ── NAVBAR ── */
-    nav {
+    /* ════════════════════════════
+       SIDEBAR NAV
+    ════════════════════════════ */
+    .sidebar {
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      z-index: 100;
+      height: 100vh;
+      width: var(--sidebar-w);
+      background: rgba(2,2,10,0.92);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-right: 1px solid var(--border);
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0;
+      transform: translateX(0);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .sidebar.closed {
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+    }
+
+    .sidebar-top {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-logo {
+      font-family: var(--display);
+      font-size: 2rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-tagline {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-section-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .sidebar-links {
+      list-style: none;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sidebar-links a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s, background 0.2s, padding-left 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-links a:hover,
+    .sidebar-links a.active {
+      color: var(--gold);
+      background: var(--gold-glow2);
+      border-left-color: var(--gold);
+      padding-left: 2rem;
+    }
+
+    .sidebar-footer {
+      padding: 1.25rem 1.5rem 0;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .sidebar-footer a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .sidebar-footer a:hover { color: var(--gold); }
+
+    /* ════════════════════════════
+       TOP NAV BAR
+    ════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
       height: 58px;
       display: flex;
       align-items: center;
-      padding: 0 2.5rem;
-      justify-content: space-between;
-      background: rgba(2, 2, 10, 0.8);
+      padding: 0 2rem;
+      background: rgba(2,2,10,0.75);
       backdrop-filter: blur(20px) saturate(1.4);
       border-bottom: 1px solid var(--border);
+      gap: 1.5rem;
     }
 
-    .nav-logo {
-      font-family: var(--display);
-      font-size: 1.6rem;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.04em;
+    /* hamburger */
+    .nav-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1.3rem;
       line-height: 1;
-    }
-
-    .nav-logo span {
-      color: var(--text-dim);
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      font-weight: 400;
-      display: inline-block;
-      vertical-align: middle;
-      margin-left: 0.5rem;
-      letter-spacing: 0.08em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      padding: 4px 6px;
+      z-index: 1;
+      flex-shrink: 0;
       transition: color 0.2s;
-      position: relative;
+    }
+    .nav-toggle:hover { color: var(--gold); }
+
+    /* center area grows to fill remaining space */
+    .nav-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transition: transform 0.25s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
+    .nav-title {
+      font-family: var(--display);
+      font-size: 1.5rem;
       color: var(--gold);
-    }
-
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      transform: scaleX(1);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      line-height: 1;
     }
 
     .nav-badge {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--gold);
       border: 1px solid var(--border-hi);
-      padding: 4px 12px;
+      padding: 3px 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       background: var(--gold-glow2);
+    }
+
+    /* right placeholder so center is truly centered */
+    .nav-right { width: 40px; flex-shrink: 0; }
+
+    /* ════════════════════════════
+       MAIN CONTENT
+    ════════════════════════════ */
+    .page {
+      margin-left: var(--sidebar-w);
+      transition: margin-left 0.35s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .page.expanded {
+      margin-left: 0;
     }
 
     /* ── HERO ── */
@@ -193,36 +263,29 @@ git push
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 7rem 2.5rem 5rem;
+      padding: 7rem 3.5rem 5rem;
       position: relative;
       overflow: hidden;
     }
 
-    /* Huge ghost text */
     .hero-ghost {
       position: absolute;
       right: -0.02em;
       top: 50%;
       transform: translateY(-50%);
       font-family: var(--display);
-      font-size: clamp(12rem, 32vw, 30rem);
+      font-size: clamp(12rem, 28vw, 28rem);
       color: transparent;
-      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.04);
+      -webkit-text-stroke: 1px rgba(245,197,24,0.04);
       pointer-events: none;
       line-height: 1;
-      letter-spacing: -0.02em;
       user-select: none;
       animation: ghostDrift 8s ease-in-out infinite alternate;
     }
 
     @keyframes ghostDrift {
-      from {
-        transform: translateY(-50%) translateX(0);
-      }
-
-      to {
-        transform: translateY(-52%) translateX(-0.5%);
-      }
+      from { transform: translateY(-50%) translateX(0); }
+      to   { transform: translateY(-52%) translateX(-0.5%); }
     }
 
     .hero-eyebrow {
@@ -238,19 +301,12 @@ git push
       animation: fadeUp 0.8s ease both;
     }
 
-    .hero-eyebrow::before {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      display: block;
-      flex-shrink: 0;
-    }
+    .hero-eyebrow::before { content:''; width:40px; height:1px; background:var(--gold); display:block; flex-shrink:0; }
 
     .hero-title {
       font-family: var(--display);
-      font-size: clamp(4rem, 10vw, 10rem);
-      line-height: 0.9;
+      font-size: clamp(4rem,9vw,9rem);
+      line-height: 0.92;
       letter-spacing: 0.02em;
       color: var(--text);
       margin-bottom: 0.5rem;
@@ -260,12 +316,12 @@ git push
     .hero-title .accent {
       color: var(--gold);
       display: block;
-      text-shadow: 0 0 80px rgba(245, 197, 24, 0.3);
+      text-shadow: 0 0 80px rgba(245,197,24,0.25);
     }
 
     .hero-subtitle {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.15em;
       color: var(--blue);
       text-transform: uppercase;
@@ -274,7 +330,7 @@ git push
     }
 
     .hero-desc {
-      max-width: 46ch;
+      max-width: 44ch;
       color: var(--text-mid);
       font-size: 0.92rem;
       font-weight: 300;
@@ -295,7 +351,7 @@ git push
       color: #02020a;
       padding: 0.75rem 2rem;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-decoration: none;
       border: none;
@@ -305,41 +361,30 @@ git push
       transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
       display: inline-block;
     }
-
-    .btn-primary:hover {
-      background: #ffd84d;
-      box-shadow: 0 0 30px rgba(245, 197, 24, 0.4);
-      transform: translateY(-2px);
-    }
+    .btn-primary:hover { background:#ffd84d; box-shadow:0 0 30px rgba(245,197,24,0.35); transform:translateY(-2px); }
 
     .btn-ghost {
       background: transparent;
       color: var(--gold);
       padding: 0.75rem 2rem;
       font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 400;
+      font-size: 0.7rem;
       text-decoration: none;
       border: 1px solid var(--border-hi);
       cursor: pointer;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s;
       display: inline-block;
     }
-
-    .btn-ghost:hover {
-      background: var(--gold-glow);
-      box-shadow: 0 0 20px rgba(245, 197, 24, 0.1);
-      transform: translateY(-2px);
-    }
+    .btn-ghost:hover { background:var(--gold-glow); transform:translateY(-2px); }
 
     .hero-scroll {
       position: absolute;
       bottom: 2.5rem;
-      left: 2.5rem;
+      left: 3.5rem;
       font-family: var(--mono);
-      font-size: 0.64rem;
+      font-size: 0.62rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-dim);
@@ -356,33 +401,59 @@ git push
       animation: scrollExpand 1.5s 1.2s ease forwards;
     }
 
-    @keyframes scrollExpand {
-      to {
-        width: 40px;
-      }
+    @keyframes scrollExpand { to { width: 40px; } }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--void);
+      padding: 0.65rem 0;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ── SECTION DIVIDER ── */
+    .ticker-track {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 22s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .ticker-item span { color: var(--gold); margin: 0 0.5rem; }
+
+    @keyframes ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+    /* ── DIVIDER ── */
     .divider {
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-hi) 30%, var(--border-hi) 70%, transparent);
+      background: linear-gradient(90deg,transparent,var(--border-hi) 30%,var(--border-hi) 70%,transparent);
       position: relative;
       z-index: 1;
     }
 
     /* ── SECTIONS ── */
     section {
-      padding: 6rem 2.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
+      padding: 6rem 3.5rem;
+      max-width: 900px;
       position: relative;
       z-index: 1;
     }
 
     .section-label {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--gold);
@@ -392,18 +463,11 @@ git push
       gap: 0.8rem;
     }
 
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 1px;
-      background: var(--gold);
-    }
+    .section-label::before { content:''; display:block; width:16px; height:1px; background:var(--gold); }
 
     .section-title {
       font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-size: clamp(2.5rem,5vw,4.5rem);
       letter-spacing: 0.03em;
       color: var(--text);
       margin-bottom: 0.5rem;
@@ -414,86 +478,66 @@ git push
       color: var(--text-mid);
       font-size: 0.88rem;
       font-weight: 300;
-      max-width: 50ch;
+      max-width: 56ch;
       line-height: 1.9;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
       margin-top: 0.75rem;
     }
 
-    /* ── CARD GRID ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1px;
-      background: var(--border);
+    /* ── CONTENT BLOCK (replaces cards) ── */
+    .content-block {
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .card {
-      background: var(--bg2);
-      padding: 2rem;
-      transition: background 0.3s, transform 0.3s;
-      position: relative;
-      overflow: hidden;
+    .content-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0% 0%, var(--gold-glow) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .card:hover {
-      background: var(--bg3);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card-num {
-      font-family: var(--display);
-      font-size: 3.5rem;
-      color: rgba(245, 197, 24, 0.07);
-      line-height: 1;
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-      transition: color 0.3s;
-    }
-
-    .card:hover .card-num {
-      color: rgba(245, 197, 24, 0.25);
-    }
-
-    .card-title {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .card-desc {
-      font-size: 0.82rem;
-      font-weight: 300;
-      color: var(--text-mid);
-      line-height: 1.8;
-    }
-
-    .card-tag {
-      display: inline-block;
-      margin-top: 1.25rem;
+    .content-block-eyebrow {
       font-family: var(--mono);
       font-size: 0.62rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold-dim);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
+      margin-bottom: 0.6rem;
+    }
+
+    .content-block-title {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      letter-spacing: 0.03em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .content-block p {
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 2;
+      max-width: 62ch;
+      margin-bottom: 0.85rem;
+    }
+
+    .content-block p:last-child { margin-bottom: 0; }
+
+    .content-block p strong { color: var(--gold); font-weight: 500; }
+
+    .formula {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      border-left: 2px solid var(--border-hi);
+      background: var(--gold-glow2);
+      display: inline-block;
     }
 
     /* ── ROW LIST ── */
@@ -504,28 +548,21 @@ git push
 
     .row-item {
       display: grid;
-      grid-template-columns: 70px 1fr 1.5fr;
+      grid-template-columns: 70px 1fr 1.6fr;
       border-bottom: 1px solid var(--border);
       transition: background 0.25s;
     }
 
-    .row-item:last-child {
-      border-bottom: none;
-    }
+    .row-item:last-child { border-bottom: none; }
+    .row-item:hover { background: var(--bg3); }
 
-    .row-item:hover {
-      background: var(--bg3);
-    }
-
-    .row-item>div {
+    .row-item > div {
       padding: 1.25rem 1.5rem;
       border-right: 1px solid var(--border);
       font-size: 0.82rem;
     }
 
-    .row-item>div:last-child {
-      border-right: none;
-    }
+    .row-item > div:last-child { border-right: none; }
 
     .row-idx {
       font-family: var(--mono);
@@ -537,7 +574,7 @@ git push
     .row-name {
       font-family: var(--mono);
       color: var(--text);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -566,10 +603,7 @@ git push
       margin-bottom: 1.2rem;
     }
 
-    .prose p strong {
-      color: var(--gold);
-      font-weight: 500;
-    }
+    .prose p strong { color: var(--gold); font-weight: 500; }
 
     /* ── STAT GRID ── */
     .stat-grid {
@@ -587,24 +621,18 @@ git push
       transition: background 0.25s;
     }
 
-    .stat-box:hover {
-      background: var(--bg3);
-    }
+    .stat-box:hover { background: var(--bg3); }
 
     .stat-box::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      width: 0%;
+      bottom: 0; left: 0;
+      height: 2px; width: 0%;
       background: var(--gold);
       transition: width 0.5s ease;
     }
 
-    .stat-box:hover::after {
-      width: 100%;
-    }
+    .stat-box:hover::after { width: 100%; }
 
     .stat-num {
       font-family: var(--display);
@@ -613,88 +641,47 @@ git push
       letter-spacing: -0.02em;
       line-height: 1;
       margin-bottom: 0.5rem;
-      text-shadow: 0 0 40px rgba(245, 197, 24, 0.2);
+      text-shadow: 0 0 40px rgba(245,197,24,0.2);
     }
 
     .stat-label {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-dim);
     }
 
-    /* ── TICKER / MARQUEE ── */
-    .ticker-wrap {
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--void);
-      padding: 0.65rem 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .ticker-track {
-      display: flex;
-      gap: 3rem;
-      white-space: nowrap;
-      animation: ticker 20s linear infinite;
-    }
-
-    .ticker-item {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      flex-shrink: 0;
-    }
-
-    .ticker-item span {
-      color: var(--gold);
-      margin: 0 0.5rem;
-    }
-
-    @keyframes ticker {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 2rem 2.5rem;
+      padding: 1.5rem 3.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
       position: relative;
       z-index: 1;
-      background: rgba(2, 2, 10, 0.6);
+      background: rgba(2,2,10,0.6);
     }
 
     .footer-logo {
       font-family: var(--display);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: var(--gold);
       letter-spacing: 0.04em;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
     }
 
-    .footer-links a {
+    .footer-gh a {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--text-dim);
       text-decoration: none;
       letter-spacing: 0.1em;
@@ -702,99 +689,29 @@ git push
       transition: color 0.2s;
     }
 
-    .footer-links a:hover {
-      color: var(--gold);
-    }
-
-    .footer-copy {
-      font-family: var(--mono);
-      font-size: 0.63rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    /* ── FORMULA DECORATION ── */
-    .formula {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
-      margin-top: 0.75rem;
-      opacity: 0.6;
-    }
+    .footer-gh a:hover { color: var(--gold); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ── SCAN LINE OVERLAY ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg,
-          transparent,
-          transparent 2px,
-          rgba(0, 0, 0, 0.03) 2px,
-          rgba(0, 0, 0, 0.03) 4px);
-      pointer-events: none;
-      z-index: 200;
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
     }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      nav {
-        padding: 0 1.25rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding: 6rem 1.25rem 4rem;
-      }
-
-      section {
-        padding: 4rem 1.25rem;
-      }
-
-      .two-col {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .row-item {
-        grid-template-columns: 50px 1fr;
-      }
-
-      .row-detail {
-        display: none;
-      }
-
-      footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
-
-      .footer-links {
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
+      .page { margin-left: 0 !important; }
+      .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      .sidebar.open { transform: translateX(0); }
+      nav { padding: 0 1.25rem; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-scroll { left: 1.5rem; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .row-item { grid-template-columns: 50px 1fr; }
+      .row-detail { display: none; }
+      footer { padding: 1.25rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
     }
   </style>
 </head>
-
 <body>
 
   <!-- STARFIELD -->
@@ -805,219 +722,274 @@ git push
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <!-- NAVBAR -->
-  <nav>
-    <a href="#" class="nav-logo">4D <span>/ NOTRACHIT</span></a>
-    <ul class="nav-links">
-      <li><a href="#section-1">Newtonian Mechanics</a></li>
-      <li><a href="#section-2">General Relativity</a></li>
-      <li><a href="#section-3">Special Relativity</a></li>
-      <li><a href="#section-4">Higher Dimensions</a></li>
-      <li><a href="#section-4">String Theory</a></li>
+  <!-- ════ SIDEBAR ════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <a href="#" class="sidebar-logo">4D</a>
+      <div class="sidebar-tagline">/ NotRachit</div>
+    </div>
+
+    <div class="sidebar-section-label">Contents</div>
+    <ul class="sidebar-links" id="sidebar-links">
+      <li><a href="#newtonian">Newtonian Mechanics</a></li>
+      <li><a href="#special">Special Relativity</a></li>
+      <li><a href="#general">General Relativity</a></li>
+      <li><a href="#quantum">Quantum Mechanics</a></li>
+      <li><a href="#higher">Higher Dimensions</a></li>
+      <li><a href="#string">String Theory</a></li>
+      <li><a href="#holography">Holographic Principle</a></li>
+      <li><a href="#unification">Unification Problem</a></li>
     </ul>
-    <div class="nav-badge">Your Badge</div>
+
+    <div class="sidebar-footer">
+      <a href="https://github.com" target="_blank">GitHub ↗</a>
+    </div>
+  </aside>
+
+  <!-- ════ TOP NAV ════ -->
+  <nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-center">
+      <a href="#" class="nav-title">THE 4TH DIMENSION</a>
+      <div class="nav-badge">In Progress</div>
+    </div>
+    <div class="nav-right"></div>
   </nav>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-ghost" aria-hidden="true">4D</div>
-    <p class="hero-eyebrow">Eyebrow text · Subtitle · Context</p>
-    <h1 class="hero-title">
-      The
-      <span class="accent">4th Dimension</span>
-    </h1>
-    <p class="hero-subtitle">Special Relativity · General Relativity · Quantum</p>
-    <p class="hero-desc">
-      A personal thesis website exploring the fourth dimension through special relativity, general relativity, and
-      quantum mechanics.
-    </p>
-    <div class="hero-actions">
-      <a href="#section-1" class="btn-primary">Primary CTA</a>
-      <a href="#section-3" class="btn-ghost">Secondary CTA</a>
-    </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div> Scroll to explore
-    </div>
-  </div>
+  <!-- ════ PAGE CONTENT ════ -->
+  <div class="page" id="page">
 
-  <!-- TICKER -->
-  <div class="ticker-wrap" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item">Special Relativity<span>—</span></span>
-      <span class="ticker-item">E = mc²<span>—</span></span>
-      <span class="ticker-item">General Relativity<span>—</span></span>
-      <span class="ticker-item">Spacetime Curvature<span>—</span></span>
-      <span class="ticker-item">Quantum Mechanics<span>—</span></span>
-      <span class="ticker-item">4th Dimension<span>—</span></span>
-      <span class="ticker-item">Lorentz Transform<span>—</span></span>
-      <span class="ticker-item">Wave Function<span>—</span></span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item">Special Relativity<span>—</span></span>
-      <span class="ticker-item">E = mc²<span>—</span></span>
-      <span class="ticker-item">General Relativity<span>—</span></span>
-      <span class="ticker-item">Spacetime Curvature<span>—</span></span>
-      <span class="ticker-item">Quantum Mechanics<span>—</span></span>
-      <span class="ticker-item">4th Dimension<span>—</span></span>
-      <span class="ticker-item">Lorentz Transform<span>—</span></span>
-      <span class="ticker-item">Wave Function<span>—</span></span>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- SECTION 1 — Card Grid -->
-  <section id="section-1">
-    <p class="section-label">Label</p>
-    <h2 class="section-title">Section Heading</h2>
-    <p class="section-sub">A short description of this section. Replace with your actual intro text.</p>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-num">01</div>
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Short description of this card item. Replace with your content.</p>
-        <span class="card-tag">Tag</span>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-ghost" aria-hidden="true">4D</div>
+      <p class="hero-eyebrow">Personal Thesis · Physics · 2nd Year</p>
+      <h1 class="hero-title">
+        The
+        <span class="accent">4th Dimension</span>
+      </h1>
+      <p class="hero-subtitle">Special Relativity · General Relativity · Quantum</p>
+      <p class="hero-desc">
+        A personal thesis exploring the fourth dimension through special relativity, general relativity, and quantum mechanics — and why the universe's two greatest theories still refuse to agree.
+      </p>
+      <div class="hero-actions">
+        <a href="#newtonian" class="btn-primary">Start Reading</a>
+        <a href="#unification" class="btn-ghost">The Big Problem</a>
       </div>
-      <div class="card">
-        <div class="card-num">02</div>
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Short description of this card item. Replace with your content.</p>
-        <span class="card-tag">Tag</span>
-      </div>
-      <div class="card">
-        <div class="card-num">03</div>
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Short description of this card item. Replace with your content.</p>
-        <span class="card-tag">Tag</span>
-      </div>
-      <div class="card">
-        <div class="card-num">04</div>
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Short description of this card item. Replace with your content.</p>
-        <span class="card-tag">Tag</span>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div> Scroll to explore
       </div>
     </div>
-  </section>
 
-  <div class="divider"></div>
-
-  <!-- SECTION 2 — Row List -->
-  <section id="section-2">
-    <p class="section-label">Label</p>
-    <h2 class="section-title">Section Heading</h2>
-    <p class="section-sub">A short description of this section.</p>
-
-    <div class="row-list">
-      <div class="row-item">
-        <div class="row-idx">01</div>
-        <div>
-          <div class="row-name">Item Name</div>
-        </div>
-        <div class="row-detail">Detail or description of this item goes here.</div>
-      </div>
-      <div class="row-item">
-        <div class="row-idx">02</div>
-        <div>
-          <div class="row-name">Item Name</div>
-        </div>
-        <div class="row-detail">Detail or description of this item goes here.</div>
-      </div>
-      <div class="row-item">
-        <div class="row-idx">03</div>
-        <div>
-          <div class="row-name">Item Name</div>
-        </div>
-        <div class="row-detail">Detail or description of this item goes here.</div>
-      </div>
-      <div class="row-item">
-        <div class="row-idx">04</div>
-        <div>
-          <div class="row-name">Item Name</div>
-        </div>
-        <div class="row-detail">Detail or description of this item goes here.</div>
+    <!-- TICKER -->
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">Special Relativity<span>—</span></span>
+        <span class="ticker-item">E = mc²<span>—</span></span>
+        <span class="ticker-item">General Relativity<span>—</span></span>
+        <span class="ticker-item">Spacetime Curvature<span>—</span></span>
+        <span class="ticker-item">Quantum Mechanics<span>—</span></span>
+        <span class="ticker-item">4th Dimension<span>—</span></span>
+        <span class="ticker-item">Lorentz Transform<span>—</span></span>
+        <span class="ticker-item">Wave Function<span>—</span></span>
+        <span class="ticker-item">String Theory<span>—</span></span>
+        <span class="ticker-item">Holographic Principle<span>—</span></span>
+        <span class="ticker-item">Special Relativity<span>—</span></span>
+        <span class="ticker-item">E = mc²<span>—</span></span>
+        <span class="ticker-item">General Relativity<span>—</span></span>
+        <span class="ticker-item">Spacetime Curvature<span>—</span></span>
+        <span class="ticker-item">Quantum Mechanics<span>—</span></span>
+        <span class="ticker-item">4th Dimension<span>—</span></span>
+        <span class="ticker-item">Lorentz Transform<span>—</span></span>
+        <span class="ticker-item">Wave Function<span>—</span></span>
+        <span class="ticker-item">String Theory<span>—</span></span>
+        <span class="ticker-item">Holographic Principle<span>—</span></span>
       </div>
     </div>
-  </section>
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <!-- SECTION 3 — Two Column -->
-  <section id="section-3">
-    <p class="section-label">Label</p>
-    <h2 class="section-title">Section Heading</h2>
+    <!-- SECTION — Newtonian Mechanics -->
+    <section id="newtonian">
+      <p class="section-label">Chapter 01</p>
+      <h2 class="section-title">Newtonian Mechanics</h2>
+      <p class="section-sub">Where it all began — absolute space, absolute time, and three tidy dimensions.</p>
 
-    <div class="two-col" style="margin-top:2.5rem">
-      <div class="prose">
-        <p>First paragraph of your text content. Use <strong>highlighted text</strong> to emphasize key ideas.</p>
-        <p>Second paragraph. Keep paragraphs short and readable. Replace all of this with your actual content.</p>
-        <p>Third paragraph if needed. Otherwise remove it.</p>
-        <p class="formula">ds² = −c²dt² + dx² + dy² + dz²</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">Absolute Space & Time</div>
+        <div class="content-block-title">The Classical Picture</div>
+        <p>Your content goes here. Write about Newton's laws, absolute space, and why three dimensions felt complete. Use <strong>highlighted text</strong> for key terms.</p>
+        <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best for screen reading.</p>
       </div>
 
-      <div class="stat-grid">
-        <div class="stat-box">
-          <div class="stat-num">—</div>
-          <div class="stat-label">Stat Label</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num">—</div>
-          <div class="stat-label">Stat Label</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num">—</div>
-          <div class="stat-label">Stat Label</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num">—</div>
-          <div class="stat-label">Stat Label</div>
-        </div>
+      <div class="content-block">
+        <div class="content-block-eyebrow">Where It Breaks</div>
+        <div class="content-block-title">The First Cracks</div>
+        <p>Describe the problems that Newtonian mechanics couldn't solve — the constancy of the speed of light, the Michelson-Morley experiment, and what that meant for absolute space.</p>
+        <div class="formula">F = ma &nbsp;·&nbsp; p = mv &nbsp;·&nbsp; E = ½mv²</div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <!-- SECTION 4 — Another Card Grid -->
-  <section id="section-4">
-    <p class="section-label">Label</p>
-    <h2 class="section-title">Section Heading</h2>
-    <p class="section-sub">A short description of this section.</p>
+    <!-- SECTION — Special Relativity -->
+    <section id="special">
+      <p class="section-label">Chapter 02</p>
+      <h2 class="section-title">Special Relativity</h2>
+      <p class="section-sub">Time becomes the fourth dimension. Space and time fuse into a single fabric.</p>
 
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Description text. Replace with your content.</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">1905</div>
+        <div class="content-block-title">Minkowski Spacetime</div>
+        <p>Your content goes here. Explain how Einstein's 1905 paper changed everything. Minkowski showed that space and time aren't separate — they're a single 4D continuum.</p>
+        <p>Write about the spacetime interval, why it's invariant, and what that actually means physically.</p>
+        <div class="formula">ds² = −c²dt² + dx² + dy² + dz²</div>
       </div>
-      <div class="card">
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Description text. Replace with your content.</p>
-      </div>
-      <div class="card">
-        <div class="card-title">Card Title</div>
-        <p class="card-desc">Description text. Replace with your content.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">4D</div>
-    <ul class="footer-links">
-      <li><a href="#section-1">Section 1</a></li>
-      <li><a href="#section-2">Section 2</a></li>
-      <li><a href="#section-3">Section 3</a></li>
-      <li><a href="#section-4">Section 4</a></li>
-      <li><a href="https://github.com" target="_blank">GitHub ↗</a></li>
-    </ul>
-    <div class="footer-copy">© 2026 NotRachit</div>
-  </footer>
+      <div class="content-block">
+        <div class="content-block-eyebrow">Consequences</div>
+        <div class="content-block-title">Lorentz Transformations</div>
+        <p>Describe time dilation, length contraction, and how different observers can disagree on measurements but still agree on the spacetime interval. This is where classical intuition completely breaks down.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — General Relativity -->
+    <section id="general">
+      <p class="section-label">Chapter 03</p>
+      <h2 class="section-title">General Relativity</h2>
+      <p class="section-sub">Gravity isn't a force. It's the curvature of 4D spacetime caused by mass and energy.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">1915</div>
+        <div class="content-block-title">Spacetime Curvature</div>
+        <p>Your content goes here. Explain the equivalence principle, how Einstein extended special relativity to include gravity, and what it means to say spacetime is curved.</p>
+        <div class="formula">G<sub>μν</sub> + Λg<sub>μν</sub> = (8πG/c⁴) T<sub>μν</sub></div>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">Predictions</div>
+        <div class="content-block-title">Black Holes & Gravitational Waves</div>
+        <p>Write about the predictions of GR — black holes, the bending of light, gravitational time dilation, and the gravitational waves detected by LIGO in 2015. All confirmed. All from a theory written in 1915.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — Quantum Mechanics -->
+    <section id="quantum">
+      <p class="section-label">Chapter 04</p>
+      <h2 class="section-title">Quantum Mechanics</h2>
+      <p class="section-sub">At the smallest scales, space and time behave nothing like Einstein's smooth fabric.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">Wave Functions</div>
+        <div class="content-block-title">The Quantum Picture of Space</div>
+        <p>Your content goes here. Describe how quantum mechanics treats position as a probability distribution, what the wave function represents, and why the act of measurement is so philosophically strange.</p>
+        <div class="formula">iℏ ∂ψ/∂t = Ĥψ</div>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">The Problem</div>
+        <div class="content-block-title">QM vs GR</div>
+        <p>Explain why quantum mechanics and general relativity are incompatible. GR treats spacetime as smooth and continuous. QM predicts it should be foamy and discrete at the Planck scale. Both are right in their own domain. Neither works in the other's.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — Higher Dimensions -->
+    <section id="higher">
+      <p class="section-label">Chapter 05</p>
+      <h2 class="section-title">Higher Dimensions</h2>
+      <p class="section-sub">What if four dimensions aren't enough? The mathematics of spaces we can't visualize.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">Beyond 4D</div>
+        <div class="content-block-title">Kaluza-Klein & Compact Dimensions</div>
+        <p>Your content goes here. Explain the idea of extra spatial dimensions — how they might be compactified at scales too small to observe, and why adding dimensions can actually unify forces.</p>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">Visualization</div>
+        <div class="content-block-title">The Tesseract & 4D Geometry</div>
+        <p>Describe how mathematicians think about 4D geometry, what a tesseract (4D hypercube) actually is, and the limits of our 3D intuition when thinking about higher-dimensional spaces.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — String Theory -->
+    <section id="string">
+      <p class="section-label">Chapter 06</p>
+      <h2 class="section-title">String Theory</h2>
+      <p class="section-sub">Ten or eleven dimensions, vibrating strings, and the most ambitious theory in physics.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">The Framework</div>
+        <div class="content-block-title">Strings & Extra Dimensions</div>
+        <p>Your content goes here. Explain what string theory proposes — that fundamental particles are actually 1D vibrating strings, and that the theory only works mathematically if spacetime has 10 or 11 dimensions.</p>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">M-Theory</div>
+        <div class="content-block-title">The 11th Dimension</div>
+        <p>Describe how the five different versions of string theory were unified into M-theory, which requires an 11th dimension — a 2D membrane (brane) rather than a 1D string as the fundamental object.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — Holographic Principle -->
+    <section id="holography">
+      <p class="section-label">Chapter 07</p>
+      <h2 class="section-title">Holographic Principle</h2>
+      <p class="section-sub">Could our 3D reality be encoded on a 2D surface? The most mind-bending idea in modern physics.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">AdS/CFT</div>
+        <div class="content-block-title">A Universe as a Hologram</div>
+        <p>Your content goes here. Explain the holographic principle — that all the information in a 3D volume can be encoded on its 2D boundary. Describe Maldacena's AdS/CFT correspondence and why physicists take it seriously.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION — Unification Problem -->
+    <section id="unification">
+      <p class="section-label">Chapter 08</p>
+      <h2 class="section-title">The Unification Problem</h2>
+      <p class="section-sub">The open question that defines modern physics. Two perfect theories. One reality. No overlap.</p>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">The Core Conflict</div>
+        <div class="content-block-title">Why They Can't Both Be Right</div>
+        <p>Your content goes here. Summarize the fundamental incompatibility between GR and QM, what happens when you try to apply both at the same time (like at the center of a black hole or the Big Bang singularity), and why this is the biggest unsolved problem in physics.</p>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-eyebrow">Where We Are</div>
+        <div class="content-block-title">Loop Quantum Gravity & Beyond</div>
+        <p>Describe the leading approaches to quantum gravity — loop quantum gravity, spin foam models, causal dynamical triangulations. Unlike string theory, these try to quantize spacetime itself rather than adding extra dimensions.</p>
+        <p>End with the honest conclusion: we don't know yet. And that's what makes it worth studying.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">4D</div>
+      <div class="footer-copy">© 2026 NotRachit</div>
+      <div class="footer-gh"><a href="https://github.com" target="_blank">GitHub ↗</a></div>
+    </footer>
+
+  </div><!-- /page -->
 
   <script>
     /* ── STARFIELD ── */
     (function () {
       const canvas = document.getElementById('stars');
       const ctx = canvas.getContext('2d');
-      let stars = [];
+      let stars = [], nebula = [];
 
       function resize() {
         canvas.width = window.innerWidth;
@@ -1030,42 +1002,96 @@ git push
           stars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            r: Math.random() * 0.9 + 0.1,
-            a: Math.random(),
-            speed: Math.random() * 0.004 + 0.001,
-            phase: Math.random() * Math.PI * 2
+            r: Math.random() * 0.85 + 0.1,
+            a: Math.random() * 0.7 + 0.1,
+            speed: Math.random() * 0.003 + 0.001,
+            phase: Math.random() * Math.PI * 2,
+            // very slow drift
+            vx: (Math.random() - 0.5) * 0.015,
+            vy: (Math.random() - 0.5) * 0.008
           });
         }
       }
 
       function draw(t) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // subtle nebula wisps
+        const g1 = ctx.createRadialGradient(canvas.width * 0.7, canvas.height * 0.2, 0, canvas.width * 0.7, canvas.height * 0.2, canvas.width * 0.35);
+        g1.addColorStop(0, 'rgba(58,111,255,0.025)');
+        g1.addColorStop(1, 'transparent');
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const g2 = ctx.createRadialGradient(canvas.width * 0.2, canvas.height * 0.7, 0, canvas.width * 0.2, canvas.height * 0.7, canvas.width * 0.3);
+        g2.addColorStop(0, 'rgba(245,197,24,0.018)');
+        g2.addColorStop(1, 'transparent');
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         stars.forEach(s => {
-          const alpha = s.a * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+          // drift
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+
+          const alpha = s.a * (0.45 + 0.55 * Math.sin(t * s.speed + s.phase));
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(220,215,255,${alpha})`;
+          // mix of white-blue and warm white stars
+          const warm = s.phase > Math.PI;
+          ctx.fillStyle = warm
+            ? `rgba(255,245,220,${alpha})`
+            : `rgba(200,210,255,${alpha})`;
           ctx.fill();
         });
+
         requestAnimationFrame(draw);
       }
 
       resize();
-      createStars(200);
-      window.addEventListener('resize', () => { resize(); createStars(200); });
+      createStars(220);
+      window.addEventListener('resize', () => { resize(); createStars(220); });
       requestAnimationFrame(draw);
     })();
 
-    /* ── NAV ACTIVE ── */
-    const links = document.querySelectorAll('.nav-links a');
-    const sections = document.querySelectorAll('section[id]');
+    /* ── SIDEBAR TOGGLE ── */
+    const sidebar   = document.getElementById('sidebar');
+    const page      = document.getElementById('page');
+    const toggle    = document.getElementById('nav-toggle');
+    let isOpen      = true; // open by default
+
+    toggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      sidebar.classList.toggle('closed', !isOpen);
+      page.classList.toggle('expanded', !isOpen);
+      toggle.textContent = isOpen ? '☰' : '☰';
+    });
+
+    /* ── SIDEBAR NAV ACTIVE ── */
+    const sideLinks = document.querySelectorAll('#sidebar-links a');
+    const sections  = document.querySelectorAll('section[id]');
+
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
-      links.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) current = s.id; });
+      sideLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+    });
+
+    /* ── MOBILE: close sidebar on link click ── */
+    sideLinks.forEach(a => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          isOpen = false;
+          sidebar.classList.add('closed');
+          page.classList.add('expanded');
+        }
+      });
     });
   </script>
 
 </body>
-
 </html>
