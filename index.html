@@ -4,44 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The 4th Dimension</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Bebas+Neue&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #02020a;
-      --bg2: #07071a;
-      --bg3: #0d0d24;
-      --void: #000008;
+      --bg: #05050f;
+      --bg2: #080818;
+      --bg3: #0a0a20;
+      --void: #020208;
       --gold: #f5c518;
       --gold-dim: #9a7c10;
       --gold-glow: rgba(245,197,24,0.12);
-      --gold-glow2: rgba(245,197,24,0.04);
-      --blue: #3a6fff;
-      --text: #eeeaf8;
-      --text-mid: #c4bedd;
-      --text-dim: #7a7495;
-      --border: rgba(245,197,24,0.1);
-      --border-hi: rgba(245,197,24,0.35);
+      --gold-glow2: rgba(245,197,24,0.05);
+      --blue: #6abaff;
+      --blue-bright: #89cfff;
+      --blue-dim: #3a7acc;
+      --purple: #9b7fff;
+      --text: #ffffff;
+      --text-mid: #d0d8f0;
+      --text-dim: #a0aac8;
+      --text-small: #ffffff;
+      --border: rgba(100,170,255,0.22);
+      --border-hi: rgba(106,186,255,0.55);
+      --border-glow: rgba(106,186,255,0.12);
       --sidebar-w: 260px;
       --body: 'Poppins', sans-serif;
-      --mono: 'Space Mono', monospace;
+      --mono: 'Poppins', sans-serif;
       --display: 'Bebas Neue', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: radial-gradient(ellipse at bottom, #0b1225 0%, #05050f 60%, #020208 100%);
       color: var(--text);
       font-family: var(--body);
       font-size: 15px;
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* ── CANVAS STARFIELD ── */
+    /* ══ STARS CANVAS ══ */
     #stars {
       position: fixed;
       inset: 0;
@@ -49,40 +55,48 @@
       pointer-events: none;
     }
 
-    /* ── GLOW ORBS ── */
+    /* ══ MOVING STARDUST LAYER (like diary site) ══ */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      opacity: 0.55;
+      animation: moveStars 120s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes moveStars {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(-50%, -50%); }
+    }
+
+    /* ══ NEBULA ORBS ══ */
     .orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(130px);
+      filter: blur(110px);
       pointer-events: none;
       z-index: 0;
     }
-    .orb-1 { width:600px; height:600px; background:radial-gradient(circle,rgba(245,197,24,0.05) 0%,transparent 70%); top:-200px; right:-200px; }
-    .orb-2 { width:500px; height:500px; background:radial-gradient(circle,rgba(58,111,255,0.06) 0%,transparent 70%); bottom:20%; left:-150px; }
-    .orb-3 { width:400px; height:400px; background:radial-gradient(circle,rgba(245,197,24,0.03) 0%,transparent 70%); bottom:-100px; right:20%; }
+    .orb-1 { width:700px; height:700px; background:radial-gradient(circle,rgba(60,100,255,0.20) 0%,transparent 65%); top:-250px; right:-200px; }
+    .orb-2 { width:600px; height:600px; background:radial-gradient(circle,rgba(106,186,255,0.12) 0%,transparent 65%); bottom:10%; left:-180px; }
+    .orb-3 { width:500px; height:500px; background:radial-gradient(circle,rgba(80,140,255,0.14) 0%,transparent 65%); top:40%; right:5%; }
+    .orb-4 { width:400px; height:400px; background:radial-gradient(circle,rgba(155,127,255,0.12) 0%,transparent 65%); bottom:-80px; left:30%; }
+    .orb-5 { width:350px; height:350px; background:radial-gradient(circle,rgba(245,197,24,0.08) 0%,transparent 65%); top:20%; left:10%; }
 
-    /* ── SCAN LINE ── */
-    body::after {
-      content:'';
-      position:fixed;
-      inset:0;
-      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
-      pointer-events:none;
-      z-index:200;
-    }
-
-    /* ════════════════════════════
-       SIDEBAR NAV
-    ════════════════════════════ */
+    /* ══ SIDEBAR ══ */
     .sidebar {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       height: 100vh;
       width: var(--sidebar-w);
-      background: rgba(2,2,10,0.92);
-      backdrop-filter: blur(24px) saturate(1.4);
+      background: rgba(5,8,25,0.88);
+      backdrop-filter: blur(32px) saturate(1.8);
       border-right: 1px solid var(--border);
+      box-shadow: 2px 0 30px rgba(100,170,255,0.08), inset -1px 0 0 rgba(106,186,255,0.1);
       z-index: 300;
       display: flex;
       flex-direction: column;
@@ -91,9 +105,7 @@
       transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
     }
 
-    .sidebar.closed {
-      transform: translateX(calc(-1 * var(--sidebar-w)));
-    }
+    .sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
 
     .sidebar-top {
       padding: 0 1.5rem 1.5rem;
@@ -103,59 +115,63 @@
 
     .sidebar-logo {
       font-family: var(--display);
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: var(--gold);
-      letter-spacing: 0.04em;
       text-decoration: none;
+      letter-spacing: 0.04em;
       display: block;
       line-height: 1;
       margin-bottom: 0.3rem;
+      text-shadow: 0 0 30px rgba(245,197,24,0.35);
     }
 
     .sidebar-tagline {
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.6rem;
+      font-weight: 400;
       color: var(--text-dim);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .sidebar-section-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
+      font-family: var(--body);
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--blue);
       padding: 0 1.5rem;
       margin-bottom: 0.5rem;
-      margin-top: 1rem;
+      text-shadow: 0 0 12px rgba(106,186,255,0.4);
     }
 
-    .sidebar-links {
-      list-style: none;
-      flex: 1;
-      overflow-y: auto;
-    }
+    .sidebar-links { list-style: none; flex: 1; overflow-y: auto; }
+    .sidebar-links::-webkit-scrollbar { width: 3px; }
+    .sidebar-links::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-links::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     .sidebar-links a {
       display: block;
-      padding: 0.6rem 1.5rem;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      color: #ffffff;
+      padding: 0.55rem 1.5rem;
+      font-family: var(--body);
+      font-size: 0.67rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-mid);
       text-decoration: none;
       text-transform: uppercase;
-      transition: color 0.2s, background 0.2s, padding-left 0.2s;
+      transition: color 0.2s, background 0.2s, padding-left 0.2s, border-color 0.2s;
       border-left: 2px solid transparent;
     }
 
     .sidebar-links a:hover,
     .sidebar-links a.active {
-      color: var(--gold);
-      background: var(--gold-glow2);
-      border-left-color: var(--gold);
+      color: var(--blue-bright);
+      background: rgba(106,186,255,0.07);
+      border-left-color: var(--blue);
       padding-left: 2rem;
+      text-shadow: 0 0 12px rgba(106,186,255,0.4);
     }
 
     .sidebar-footer {
@@ -165,99 +181,56 @@
     }
 
     .sidebar-footer a {
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.62rem;
+      font-weight: 400;
       color: var(--text-dim);
       text-decoration: none;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
       transition: color 0.2s;
     }
+    .sidebar-footer a:hover { color: var(--blue-bright); text-shadow: 0 0 12px rgba(106,186,255,0.4); }
 
-    .sidebar-footer a:hover { color: var(--gold); }
-
-    /* ════════════════════════════
-       TOP NAV BAR
-    ════════════════════════════ */
+    /* ══ TOP NAV ══ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 200;
-      height: 58px;
+      height: 52px;
       display: flex;
       align-items: center;
-      padding: 0 2rem;
-      background: rgba(2,2,10,0.75);
-      backdrop-filter: blur(20px) saturate(1.4);
+      padding: 0 1.75rem;
+      background: rgba(5,8,25,0.72);
+      backdrop-filter: blur(24px) saturate(1.6);
       border-bottom: 1px solid var(--border);
-      gap: 1.5rem;
+      box-shadow: 0 1px 24px rgba(100,170,255,0.10), 0 0 0 0.5px rgba(106,186,255,0.08);
     }
 
-    /* hamburger */
     .nav-toggle {
       background: none;
       border: none;
       cursor: pointer;
-      color: var(--text);
-      font-size: 1.3rem;
+      color: var(--text-dim);
+      font-size: 1.2rem;
       line-height: 1;
       padding: 4px 6px;
-      z-index: 1;
-      flex-shrink: 0;
       transition: color 0.2s;
+      flex-shrink: 0;
+      font-family: var(--body);
     }
-    .nav-toggle:hover { color: var(--gold); }
+    .nav-toggle:hover { color: var(--blue-bright); }
 
-    /* center area grows to fill remaining space */
-    .nav-center {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-    }
-
-    .nav-title {
-      font-family: var(--display);
-      font-size: 1.5rem;
-      color: var(--gold);
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      line-height: 1;
-    }
-
-    .nav-badge {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--gold);
-      border: 1px solid var(--border-hi);
-      padding: 3px 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--gold-glow2);
-    }
-
-    /* right placeholder so center is truly centered */
-    .nav-right { width: 40px; flex-shrink: 0; }
-
-    /* ════════════════════════════
-       MAIN CONTENT
-    ════════════════════════════ */
+    /* ══ PAGE SHIFT ══ */
     .page {
       margin-left: var(--sidebar-w);
       transition: margin-left 0.35s cubic-bezier(0.4,0,0.2,1);
       position: relative;
       z-index: 1;
     }
+    .page.expanded { margin-left: 0; }
 
-    .page.expanded {
-      margin-left: 0;
-    }
-
-    /* ── HERO ── */
+    /* ══ HERO ══ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -276,39 +249,40 @@
       font-family: var(--display);
       font-size: clamp(12rem, 28vw, 28rem);
       color: transparent;
-      -webkit-text-stroke: 1px rgba(245,197,24,0.04);
+      -webkit-text-stroke: 1px rgba(106,186,255,0.07);
       pointer-events: none;
       line-height: 1;
       user-select: none;
-      animation: ghostDrift 8s ease-in-out infinite alternate;
+      animation: ghostDrift 9s ease-in-out infinite alternate;
     }
 
     @keyframes ghostDrift {
       from { transform: translateY(-50%) translateX(0); }
-      to   { transform: translateY(-52%) translateX(-0.5%); }
+      to   { transform: translateY(-52%) translateX(-0.6%); }
     }
 
     .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
+      font-family: var(--body);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
+      color: var(--blue-bright);
+      margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
       gap: 1rem;
       animation: fadeUp 0.8s ease both;
+      text-shadow: 0 0 18px rgba(106,186,255,0.5);
     }
-
-    .hero-eyebrow::before { content:''; width:40px; height:1px; background:var(--gold); display:block; flex-shrink:0; }
+    .hero-eyebrow::before { content:''; width:36px; height:1px; background:var(--blue); display:block; flex-shrink:0; box-shadow: 0 0 8px var(--blue); }
 
     .hero-title {
       font-family: var(--display);
-      font-size: clamp(4rem,9vw,9rem);
+      font-size: clamp(4rem, 9vw, 9rem);
       line-height: 0.92;
       letter-spacing: 0.02em;
-      color: var(--text);
+      color: #ffffff;
       margin-bottom: 0.5rem;
       animation: fadeUp 0.8s 0.1s ease both;
     }
@@ -316,23 +290,25 @@
     .hero-title .accent {
       color: var(--gold);
       display: block;
-      text-shadow: 0 0 80px rgba(245,197,24,0.25);
+      text-shadow: 0 0 80px rgba(245,197,24,0.35), 0 0 160px rgba(245,197,24,0.15);
     }
 
     .hero-subtitle {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--blue);
+      font-family: var(--body);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--blue-bright);
       text-transform: uppercase;
       margin-bottom: 2rem;
       animation: fadeUp 0.8s 0.15s ease both;
+      text-shadow: 0 0 16px rgba(106,186,255,0.4);
     }
 
     .hero-desc {
       max-width: 44ch;
       color: var(--text-mid);
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       font-weight: 300;
       line-height: 1.9;
       margin-bottom: 3rem;
@@ -348,9 +324,9 @@
 
     .btn-primary {
       background: var(--gold);
-      color: #02020a;
+      color: #05050f;
       padding: 0.75rem 2rem;
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.7rem;
       font-weight: 700;
       text-decoration: none;
@@ -361,31 +337,32 @@
       transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
       display: inline-block;
     }
-    .btn-primary:hover { background:#ffd84d; box-shadow:0 0 30px rgba(245,197,24,0.35); transform:translateY(-2px); }
+    .btn-primary:hover { background:#ffd84d; box-shadow:0 0 30px rgba(245,197,24,0.45); transform:translateY(-2px); }
 
     .btn-ghost {
       background: transparent;
-      color: var(--gold);
+      color: var(--blue-bright);
       padding: 0.75rem 2rem;
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.7rem;
+      font-weight: 500;
       text-decoration: none;
       border: 1px solid var(--border-hi);
       cursor: pointer;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       display: inline-block;
     }
-    .btn-ghost:hover { background:var(--gold-glow); transform:translateY(-2px); }
+    .btn-ghost:hover { background:rgba(106,186,255,0.1); transform:translateY(-2px); box-shadow: 0 0 20px rgba(106,186,255,0.2); }
 
     .hero-scroll {
       position: absolute;
-      bottom: 2.5rem;
-      left: 3.5rem;
-      font-family: var(--mono);
+      bottom: 2.5rem; left: 3.5rem;
+      font-family: var(--body);
       font-size: 0.62rem;
-      letter-spacing: 0.15em;
+      font-weight: 400;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-dim);
       display: flex;
@@ -394,157 +371,148 @@
       animation: fadeUp 0.8s 0.5s ease both;
     }
 
-    .scroll-line {
-      width: 0;
-      height: 1px;
-      background: var(--gold);
-      animation: scrollExpand 1.5s 1.2s ease forwards;
-    }
+    .scroll-line { width:0; height:1px; background:var(--blue); animation:scrollExpand 1.5s 1.2s ease forwards; box-shadow: 0 0 6px var(--blue); }
+    @keyframes scrollExpand { to { width:40px; } }
 
-    @keyframes scrollExpand { to { width: 40px; } }
-
-    /* ── TICKER ── */
+    /* ══ TICKER ══ */
     .ticker-wrap {
       overflow: hidden;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      background: var(--void);
+      background: rgba(5,8,25,0.65);
       padding: 0.65rem 0;
       position: relative;
       z-index: 1;
+      box-shadow: 0 0 20px rgba(100,170,255,0.06);
     }
 
     .ticker-track {
       display: flex;
       gap: 3rem;
       white-space: nowrap;
-      animation: ticker 22s linear infinite;
+      animation: ticker 24s linear infinite;
     }
 
     .ticker-item {
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.62rem;
-      letter-spacing: 0.18em;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-dim);
       flex-shrink: 0;
     }
+    .ticker-item span { color: var(--blue-bright); margin: 0 0.4rem; }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    .ticker-item span { color: var(--gold); margin: 0 0.5rem; }
-
-    @keyframes ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-
-    /* ── DIVIDER ── */
+    /* ══ DIVIDER ══ */
     .divider {
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg,transparent,var(--border-hi) 30%,var(--border-hi) 70%,transparent);
+      background: linear-gradient(90deg, transparent, rgba(100,170,255,0.35) 30%, rgba(100,170,255,0.35) 70%, transparent);
       position: relative;
       z-index: 1;
+      box-shadow: 0 0 8px rgba(100,170,255,0.1);
     }
 
-    /* ── SECTIONS ── */
+    /* ══ SECTIONS ══ */
     section {
       padding: 6rem 3.5rem;
-      max-width: 900px;
+      max-width: 860px;
       position: relative;
       z-index: 1;
     }
 
     .section-label {
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.62rem;
-      letter-spacing: 0.25em;
+      font-weight: 600;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
+      color: var(--blue-bright);
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
+      text-shadow: 0 0 14px rgba(106,186,255,0.45);
     }
-
-    .section-label::before { content:''; display:block; width:16px; height:1px; background:var(--gold); }
+    .section-label::before { content:''; display:block; width:16px; height:1px; background:var(--blue); box-shadow: 0 0 6px var(--blue); }
 
     .section-title {
       font-family: var(--display);
-      font-size: clamp(2.5rem,5vw,4.5rem);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       letter-spacing: 0.03em;
-      color: var(--text);
+      color: #ffffff;
       margin-bottom: 0.5rem;
       line-height: 0.95;
     }
 
     .section-sub {
       color: var(--text-mid);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 300;
-      max-width: 56ch;
+      max-width: 54ch;
       line-height: 1.9;
       margin-bottom: 3rem;
       margin-top: 0.75rem;
     }
 
-    /* ── CONTENT BLOCK (replaces cards) ── */
+    /* ══ CONTENT BLOCKS ══ */
     .content-block {
       margin-bottom: 3rem;
       padding-bottom: 3rem;
       border-bottom: 1px solid var(--border);
     }
-
-    .content-block:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
+    .content-block:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
 
     .content-block-eyebrow {
-      font-family: var(--mono);
+      font-family: var(--body);
       font-size: 0.62rem;
-      letter-spacing: 0.18em;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-bottom: 0.6rem;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(106,186,255,0.35);
     }
 
     .content-block-title {
       font-family: var(--display);
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
       letter-spacing: 0.03em;
-      color: var(--text);
+      color: #ffffff;
       line-height: 1;
       margin-bottom: 1rem;
     }
 
     .content-block p {
       color: var(--text-mid);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 300;
       line-height: 2;
-      max-width: 62ch;
+      max-width: 60ch;
       margin-bottom: 0.85rem;
     }
-
     .content-block p:last-child { margin-bottom: 0; }
-
     .content-block p strong { color: var(--gold); font-weight: 500; }
 
     .formula {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--blue-bright);
+      letter-spacing: 0.06em;
       margin-top: 1.25rem;
-      padding: 0.75rem 1rem;
-      border-left: 2px solid var(--border-hi);
-      background: var(--gold-glow2);
+      padding: 0.85rem 1.2rem;
+      border-left: 2px solid rgba(106,186,255,0.55);
+      background: rgba(80,140,255,0.07);
       display: inline-block;
+      box-shadow: inset 0 0 20px rgba(100,170,255,0.04), 0 0 12px rgba(106,186,255,0.08);
+      border-radius: 0 4px 4px 0;
     }
 
-    /* ── ROW LIST ── */
-    .row-list {
-      border: 1px solid var(--border);
-      background: var(--bg2);
-    }
+    /* ══ ROW LIST ══ */
+    .row-list { border: 1px solid var(--border); background: rgba(5,10,30,0.65); border-radius: 2px; box-shadow: 0 0 20px rgba(100,170,255,0.05); }
 
     .row-item {
       display: grid;
@@ -552,211 +520,123 @@
       border-bottom: 1px solid var(--border);
       transition: background 0.25s;
     }
-
     .row-item:last-child { border-bottom: none; }
-    .row-item:hover { background: var(--bg3); }
+    .row-item:hover { background: rgba(100,170,255,0.05); }
 
     .row-item > div {
-      padding: 1.25rem 1.5rem;
+      padding: 1.2rem 1.4rem;
       border-right: 1px solid var(--border);
       font-size: 0.82rem;
     }
-
     .row-item > div:last-child { border-right: none; }
 
-    .row-idx {
-      font-family: var(--mono);
-      color: var(--gold);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-    }
+    .row-idx { font-family:var(--body); color:var(--blue-bright); font-size:0.66rem; letter-spacing:0.1em; font-weight:600; }
+    .row-name { font-family:var(--body); color:#ffffff; font-size:0.76rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
+    .row-detail { color:var(--text-mid); font-weight:300; line-height:1.7; font-size:0.82rem; }
 
-    .row-name {
-      font-family: var(--mono);
-      color: var(--text);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+    /* ══ TWO COL ══ */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
 
-    .row-detail {
-      color: var(--text-mid);
-      font-weight: 300;
-      line-height: 1.7;
-      font-size: 0.82rem;
-    }
+    .prose p { color:var(--text-mid); font-size:0.9rem; font-weight:300; line-height:2; margin-bottom:1.2rem; }
+    .prose p strong { color:var(--gold); font-weight:500; }
 
-    /* ── TWO COL ── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .prose p {
-      color: var(--text-mid);
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 2;
-      margin-bottom: 1.2rem;
-    }
-
-    .prose p strong { color: var(--gold); font-weight: 500; }
-
-    /* ── STAT GRID ── */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
+    /* ══ STAT GRID ══ */
+    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
 
     .stat-box {
-      background: var(--bg2);
+      background: rgba(5,10,30,0.75);
       padding: 1.75rem;
       position: relative;
       overflow: hidden;
       transition: background 0.25s;
     }
+    .stat-box:hover { background: rgba(15,20,50,0.85); }
+    .stat-box::after { content:''; position:absolute; bottom:0; left:0; height:2px; width:0%; background:var(--blue); transition:width 0.5s ease; box-shadow: 0 0 8px var(--blue); }
+    .stat-box:hover::after { width:100%; }
 
-    .stat-box:hover { background: var(--bg3); }
+    .stat-num { font-family:var(--display); font-size:3rem; color:var(--gold); letter-spacing:-0.02em; line-height:1; margin-bottom:0.5rem; text-shadow:0 0 40px rgba(245,197,24,0.25); }
+    .stat-label { font-family:var(--body); font-size:0.64rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-dim); }
 
-    .stat-box::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 2px; width: 0%;
-      background: var(--gold);
-      transition: width 0.5s ease;
-    }
-
-    .stat-box:hover::after { width: 100%; }
-
-    .stat-num {
-      font-family: var(--display);
-      font-size: 3rem;
-      color: var(--gold);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 40px rgba(245,197,24,0.2);
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    /* ── FOOTER ── */
+    /* ══ FOOTER ══ */
     footer {
       border-top: 1px solid var(--border);
-      padding: 1.5rem 3.5rem;
+      padding: 1.4rem 3.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
       position: relative;
       z-index: 1;
-      background: rgba(2,2,10,0.6);
+      background: rgba(5,8,25,0.75);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 -1px 30px rgba(100,170,255,0.08);
     }
 
-    .footer-logo {
-      font-family: var(--display);
-      font-size: 1.3rem;
-      color: var(--gold);
-      letter-spacing: 0.04em;
-    }
+    .footer-logo { font-family:var(--display); font-size:1.3rem; color:var(--gold); letter-spacing:0.04em; text-shadow:0 0 20px rgba(245,197,24,0.3); }
+    .footer-copy { font-family:var(--body); font-size:0.62rem; font-weight:400; color:var(--text-dim); letter-spacing:0.1em; }
+    .footer-gh a { font-family:var(--body); font-size:0.62rem; font-weight:400; color:var(--text-dim); text-decoration:none; letter-spacing:0.12em; text-transform:uppercase; transition:color 0.2s; }
+    .footer-gh a:hover { color:var(--blue-bright); text-shadow:0 0 12px rgba(106,186,255,0.4); }
 
-    .footer-copy {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    .footer-gh a {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .footer-gh a:hover { color: var(--gold); }
-
-    /* ── ANIMATIONS ── */
+    /* ══ ANIMATIONS ══ */
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(24px); }
+      from { opacity:0; transform:translateY(22px); }
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /* ── MOBILE ── */
+    /* ══ MOBILE ══ */
     @media (max-width: 768px) {
       .page { margin-left: 0 !important; }
       .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
       .sidebar.open { transform: translateX(0); }
-      nav { padding: 0 1.25rem; }
-      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      nav, .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
       .hero-scroll { left: 1.5rem; }
       .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
       .row-item { grid-template-columns: 50px 1fr; }
       .row-detail { display: none; }
-      footer { padding: 1.25rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.75rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- STARFIELD -->
   <canvas id="stars"></canvas>
-
-  <!-- GLOW ORBS -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+  <div class="orb orb-5"></div>
 
-  <!-- ════ SIDEBAR ════ -->
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <a href="#" class="sidebar-logo">4D</a>
       <div class="sidebar-tagline">/ NotRachit</div>
     </div>
-
     <div class="sidebar-section-label">Contents</div>
     <ul class="sidebar-links" id="sidebar-links">
       <li><a href="#newtonian">Newtonian Mechanics</a></li>
-      <li><a href="#special">Special Relativity</a></li>
-      <li><a href="#general">General Relativity</a></li>
-      <li><a href="#quantum">Quantum Mechanics</a></li>
-      <li><a href="#higher">Higher Dimensions</a></li>
-      <li><a href="#string">String Theory</a></li>
-      <li><a href="#holography">Holographic Principle</a></li>
-      <li><a href="#unification">Unification Problem</a></li>
+      <li><a href="#maxwell">Maxwell equations</a></li>
+      <li><a href="#michelson">Michelson–Morley experiment</a></li>
+      <li><a href="#lorentz">Lorentz transformations</a></li>
+      <li><a href="#special">Special relativity</a></li>
+      <li><a href="#minkowski">Minkowski spacetime</a></li>
+      <li><a href="#general">General relativity basics</a></li>
+      <li><a href="#tensor">Tensor mathematics</a></li>
+      <li><a href="#quantum">Quantum mechanics foundations</a></li>
+      <li><a href="#quantum-field">Quantum field theory</a></li>
+      <li><a href="#kaluza">Kaluza–Klein theory</a></li>
+      <li><a href="#string">String theory / M-theory</a></li>
     </ul>
-
     <div class="sidebar-footer">
       <a href="https://github.com" target="_blank">GitHub ↗</a>
     </div>
   </aside>
 
-  <!-- ════ TOP NAV ════ -->
+  <!-- TOP NAV -->
   <nav>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
-    <div class="nav-center">
-      <a href="#" class="nav-title">THE 4TH DIMENSION</a>
-      <div class="nav-badge">In Progress</div>
-    </div>
-    <div class="nav-right"></div>
   </nav>
 
-  <!-- ════ PAGE CONTENT ════ -->
+  <!-- PAGE -->
   <div class="page" id="page">
 
     <!-- HERO -->
@@ -773,11 +653,9 @@
       </p>
       <div class="hero-actions">
         <a href="#newtonian" class="btn-primary">Start Reading</a>
-        <a href="#unification" class="btn-ghost">The Big Problem</a>
+        <a href="#tensor" class="btn-ghost">The Big Problem</a>
       </div>
-      <div class="hero-scroll">
-        <div class="scroll-line"></div> Scroll to explore
-      </div>
+      <div class="hero-scroll"><div class="scroll-line"></div> Scroll to explore</div>
     </div>
 
     <!-- TICKER -->
@@ -808,19 +686,17 @@
 
     <div class="divider"></div>
 
-    <!-- SECTION — Newtonian Mechanics -->
+    <!-- CH 01 -->
     <section id="newtonian">
       <p class="section-label">Chapter 01</p>
       <h2 class="section-title">Newtonian Mechanics</h2>
       <p class="section-sub">Where it all began — absolute space, absolute time, and three tidy dimensions.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Absolute Space & Time</div>
         <div class="content-block-title">The Classical Picture</div>
         <p>Your content goes here. Write about Newton's laws, absolute space, and why three dimensions felt complete. Use <strong>highlighted text</strong> for key terms.</p>
-        <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best for screen reading.</p>
+        <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best.</p>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Where It Breaks</div>
         <div class="content-block-title">The First Cracks</div>
@@ -831,149 +707,193 @@
 
     <div class="divider"></div>
 
-    <!-- SECTION — Special Relativity -->
-    <section id="special">
+    <!-- CH 02 -->
+    <section id="maxwell">
       <p class="section-label">Chapter 02</p>
       <h2 class="section-title">Special Relativity</h2>
       <p class="section-sub">Time becomes the fourth dimension. Space and time fuse into a single fabric.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">1905</div>
         <div class="content-block-title">Minkowski Spacetime</div>
-        <p>Your content goes here. Explain how Einstein's 1905 paper changed everything. Minkowski showed that space and time aren't separate — they're a single 4D continuum.</p>
-        <p>Write about the spacetime interval, why it's invariant, and what that actually means physically.</p>
+        <p>Your content here. Explain how Einstein's 1905 paper changed everything. Minkowski showed that space and time aren't separate — they're a single 4D continuum.</p>
         <div class="formula">ds² = −c²dt² + dx² + dy² + dz²</div>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Consequences</div>
         <div class="content-block-title">Lorentz Transformations</div>
-        <p>Describe time dilation, length contraction, and how different observers can disagree on measurements but still agree on the spacetime interval. This is where classical intuition completely breaks down.</p>
+        <p>Describe time dilation, length contraction, and how different observers can disagree on measurements but still agree on the spacetime interval.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — General Relativity -->
-    <section id="general">
+    <!-- CH 03 -->
+    <section id="michelson">
       <p class="section-label">Chapter 03</p>
       <h2 class="section-title">General Relativity</h2>
       <p class="section-sub">Gravity isn't a force. It's the curvature of 4D spacetime caused by mass and energy.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">1915</div>
         <div class="content-block-title">Spacetime Curvature</div>
-        <p>Your content goes here. Explain the equivalence principle, how Einstein extended special relativity to include gravity, and what it means to say spacetime is curved.</p>
+        <p>Your content here. Explain the equivalence principle, how Einstein extended special relativity to include gravity, and what it means to say spacetime is curved.</p>
         <div class="formula">G<sub>μν</sub> + Λg<sub>μν</sub> = (8πG/c⁴) T<sub>μν</sub></div>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Predictions</div>
         <div class="content-block-title">Black Holes & Gravitational Waves</div>
-        <p>Write about the predictions of GR — black holes, the bending of light, gravitational time dilation, and the gravitational waves detected by LIGO in 2015. All confirmed. All from a theory written in 1915.</p>
+        <p>Write about the predictions of GR — black holes, bending of light, gravitational time dilation, and the gravitational waves detected by LIGO in 2015. All from a theory written in 1915.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — Quantum Mechanics -->
-    <section id="quantum">
+    <!-- CH 04 -->
+    <section id="lorentz">
       <p class="section-label">Chapter 04</p>
       <h2 class="section-title">Quantum Mechanics</h2>
       <p class="section-sub">At the smallest scales, space and time behave nothing like Einstein's smooth fabric.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Wave Functions</div>
         <div class="content-block-title">The Quantum Picture of Space</div>
-        <p>Your content goes here. Describe how quantum mechanics treats position as a probability distribution, what the wave function represents, and why the act of measurement is so philosophically strange.</p>
+        <p>Your content here. Describe how quantum mechanics treats position as a probability distribution, what the wave function represents, and why the act of measurement is philosophically strange.</p>
         <div class="formula">iℏ ∂ψ/∂t = Ĥψ</div>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">The Problem</div>
         <div class="content-block-title">QM vs GR</div>
-        <p>Explain why quantum mechanics and general relativity are incompatible. GR treats spacetime as smooth and continuous. QM predicts it should be foamy and discrete at the Planck scale. Both are right in their own domain. Neither works in the other's.</p>
+        <p>Explain why quantum mechanics and general relativity are incompatible. GR treats spacetime as smooth and continuous. QM predicts it should be foamy and discrete at the Planck scale.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — Higher Dimensions -->
-    <section id="higher">
+    <!-- CH 05 -->
+    <section id="special">
       <p class="section-label">Chapter 05</p>
       <h2 class="section-title">Higher Dimensions</h2>
       <p class="section-sub">What if four dimensions aren't enough? The mathematics of spaces we can't visualize.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Beyond 4D</div>
         <div class="content-block-title">Kaluza-Klein & Compact Dimensions</div>
-        <p>Your content goes here. Explain the idea of extra spatial dimensions — how they might be compactified at scales too small to observe, and why adding dimensions can actually unify forces.</p>
+        <p>Explain the idea of extra spatial dimensions — how they might be compactified at scales too small to observe, and why adding dimensions can actually unify forces.</p>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Visualization</div>
         <div class="content-block-title">The Tesseract & 4D Geometry</div>
-        <p>Describe how mathematicians think about 4D geometry, what a tesseract (4D hypercube) actually is, and the limits of our 3D intuition when thinking about higher-dimensional spaces.</p>
+        <p>Describe how mathematicians think about 4D geometry, what a tesseract actually is, and the limits of our 3D intuition when thinking about higher-dimensional spaces.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — String Theory -->
-    <section id="string">
+    <!-- CH 06 -->
+    <section id="minkowski">
       <p class="section-label">Chapter 06</p>
       <h2 class="section-title">String Theory</h2>
       <p class="section-sub">Ten or eleven dimensions, vibrating strings, and the most ambitious theory in physics.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">The Framework</div>
         <div class="content-block-title">Strings & Extra Dimensions</div>
-        <p>Your content goes here. Explain what string theory proposes — that fundamental particles are actually 1D vibrating strings, and that the theory only works mathematically if spacetime has 10 or 11 dimensions.</p>
+        <p>Explain what string theory proposes — that fundamental particles are actually 1D vibrating strings, and that the theory only works mathematically if spacetime has 10 or 11 dimensions.</p>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">M-Theory</div>
         <div class="content-block-title">The 11th Dimension</div>
-        <p>Describe how the five different versions of string theory were unified into M-theory, which requires an 11th dimension — a 2D membrane (brane) rather than a 1D string as the fundamental object.</p>
+        <p>Describe how the five versions of string theory were unified into M-theory, which requires an 11th dimension and 2D membranes (branes) as the fundamental objects.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — Holographic Principle -->
-    <section id="holography">
+    <!-- CH 07 -->
+    <section id="general">
       <p class="section-label">Chapter 07</p>
       <h2 class="section-title">Holographic Principle</h2>
       <p class="section-sub">Could our 3D reality be encoded on a 2D surface? The most mind-bending idea in modern physics.</p>
-
       <div class="content-block">
         <div class="content-block-eyebrow">AdS/CFT</div>
         <div class="content-block-title">A Universe as a Hologram</div>
-        <p>Your content goes here. Explain the holographic principle — that all the information in a 3D volume can be encoded on its 2D boundary. Describe Maldacena's AdS/CFT correspondence and why physicists take it seriously.</p>
+        <p>Explain the holographic principle — that all the information in a 3D volume can be encoded on its 2D boundary. Describe Maldacena's AdS/CFT correspondence and why physicists take it seriously.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- SECTION — Unification Problem -->
-    <section id="unification">
+    <!-- CH 08 -->
+    <section id="tensor">
       <p class="section-label">Chapter 08</p>
       <h2 class="section-title">The Unification Problem</h2>
-      <p class="section-sub">The open question that defines modern physics. Two perfect theories. One reality. No overlap.</p>
-
+      <p class="section-sub">Two perfect theories. One reality. No overlap.</p>
       <div class="content-block">
         <div class="content-block-eyebrow">The Core Conflict</div>
         <div class="content-block-title">Why They Can't Both Be Right</div>
-        <p>Your content goes here. Summarize the fundamental incompatibility between GR and QM, what happens when you try to apply both at the same time (like at the center of a black hole or the Big Bang singularity), and why this is the biggest unsolved problem in physics.</p>
+        <p>Summarize the fundamental incompatibility between GR and QM — what happens when you apply both at once (black hole singularities, the Big Bang), and why this is the biggest unsolved problem in physics.</p>
       </div>
-
       <div class="content-block">
         <div class="content-block-eyebrow">Where We Are</div>
         <div class="content-block-title">Loop Quantum Gravity & Beyond</div>
-        <p>Describe the leading approaches to quantum gravity — loop quantum gravity, spin foam models, causal dynamical triangulations. Unlike string theory, these try to quantize spacetime itself rather than adding extra dimensions.</p>
-        <p>End with the honest conclusion: we don't know yet. And that's what makes it worth studying.</p>
+        <p>Describe loop quantum gravity, spin foam models, and causal dynamical triangulations — approaches that try to quantize spacetime itself rather than adding extra dimensions.</p>
+        <p>End with the honest conclusion: <strong>we don't know yet.</strong> And that's what makes it worth studying.</p>
       </div>
     </section>
+
+    <div class="divider"></div>
+
+    <!-- CH 09 -->
+    <section id="quantum">
+      <p class="section-label">Chapter 09</p>
+      <h2 class="section-title">Quantum Mechanics Foundations</h2>
+      <p class="section-sub">The rules that govern the smallest scales of reality.</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">Wave-Particle Duality</div>
+        <div class="content-block-title">The Double-Slit Experiment</div>
+        <p>Explain the foundations of quantum mechanics — the measurement problem, wave-particle duality, and how quantum mechanics upended our classical intuitions about reality.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CH 10 -->
+    <section id="quantum-field">
+      <p class="section-label">Chapter 10</p>
+      <h2 class="section-title">Quantum Field Theory</h2>
+      <p class="section-sub">Particles as excitations of underlying quantum fields pervading all of spacetime.</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">The Standard Model</div>
+        <div class="content-block-title">Fields All the Way Down</div>
+        <p>Describe quantum field theory — how it unifies special relativity with quantum mechanics, and how the Standard Model of particle physics emerges from the mathematics of fields.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CH 11 -->
+    <section id="kaluza">
+      <p class="section-label">Chapter 11</p>
+      <h2 class="section-title">Kaluza–Klein Theory</h2>
+      <p class="section-sub">The original extra-dimension theory — unifying gravity and electromagnetism through a fifth dimension.</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">Five Dimensions</div>
+        <div class="content-block-title">Kaluza's Brilliant Insight</div>
+        <p>Explain how Kaluza and Klein showed that adding a compact fifth spatial dimension to general relativity naturally produces Maxwell's equations — the first hint that extra dimensions could unify physics.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CH 12 -->
+    <section id="string">
+      <p class="section-label">Chapter 12</p>
+      <h2 class="section-title">String Theory / M-Theory</h2>
+      <p class="section-sub">The most mathematically rich attempt at a theory of everything.</p>
+      <div class="content-block">
+        <div class="content-block-eyebrow">The Big Picture</div>
+        <div class="content-block-title">Vibrating Strings & Branes</div>
+        <p>Describe the complete landscape of string theory — how vibrating strings give rise to all particles and forces, and how M-theory unifies the five consistent string theories into a single 11-dimensional framework.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
 
     <!-- FOOTER -->
     <footer>
@@ -985,11 +905,11 @@
   </div><!-- /page -->
 
   <script>
-    /* ── STARFIELD ── */
+    /* ── GALAXY STARFIELD ── */
     (function () {
       const canvas = document.getElementById('stars');
       const ctx = canvas.getContext('2d');
-      let stars = [], nebula = [];
+      let stars = [];
 
       function resize() {
         canvas.width = window.innerWidth;
@@ -999,16 +919,18 @@
       function createStars(n) {
         stars = [];
         for (let i = 0; i < n; i++) {
+          const isBright = Math.random() < 0.1;
+          const isBlue   = Math.random() < 0.4;
           stars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            r: Math.random() * 0.85 + 0.1,
-            a: Math.random() * 0.7 + 0.1,
-            speed: Math.random() * 0.003 + 0.001,
+            r: isBright ? Math.random() * 1.6 + 0.7 : Math.random() * 0.8 + 0.1,
+            baseAlpha: isBright ? Math.random() * 0.6 + 0.4 : Math.random() * 0.4 + 0.15,
+            speed: Math.random() * 0.002 + 0.0008,
             phase: Math.random() * Math.PI * 2,
-            // very slow drift
             vx: (Math.random() - 0.5) * 0.015,
-            vy: (Math.random() - 0.5) * 0.008
+            vy: (Math.random() - 0.5) * 0.008,
+            hue: isBright ? (isBlue ? 'blue-bright' : 'white') : (isBlue ? 'blue' : Math.random() < 0.3 ? 'warm' : 'white')
           });
         }
       }
@@ -1016,62 +938,79 @@
       function draw(t) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // subtle nebula wisps
-        const g1 = ctx.createRadialGradient(canvas.width * 0.7, canvas.height * 0.2, 0, canvas.width * 0.7, canvas.height * 0.2, canvas.width * 0.35);
-        g1.addColorStop(0, 'rgba(58,111,255,0.025)');
-        g1.addColorStop(1, 'transparent');
-        ctx.fillStyle = g1;
+        // Galaxy core glow — blue/purple tones
+        const gc = ctx.createRadialGradient(
+          canvas.width * 0.65, canvas.height * 0.4, 0,
+          canvas.width * 0.65, canvas.height * 0.4, canvas.width * 0.55
+        );
+        gc.addColorStop(0,   'rgba(40,80,200,0.10)');
+        gc.addColorStop(0.4, 'rgba(30,60,160,0.05)');
+        gc.addColorStop(1,   'transparent');
+        ctx.fillStyle = gc;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const g2 = ctx.createRadialGradient(canvas.width * 0.2, canvas.height * 0.7, 0, canvas.width * 0.2, canvas.height * 0.7, canvas.width * 0.3);
-        g2.addColorStop(0, 'rgba(245,197,24,0.018)');
-        g2.addColorStop(1, 'transparent');
-        ctx.fillStyle = g2;
+        // Blue nebula top-right
+        const gn = ctx.createRadialGradient(
+          canvas.width * 0.85, canvas.height * 0.15, 0,
+          canvas.width * 0.85, canvas.height * 0.15, canvas.width * 0.30
+        );
+        gn.addColorStop(0,   'rgba(60,130,255,0.07)');
+        gn.addColorStop(1,   'transparent');
+        ctx.fillStyle = gn;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // Stars
         stars.forEach(s => {
-          // drift
-          s.x += s.vx;
-          s.y += s.vy;
+          s.x += s.vx; s.y += s.vy;
           if (s.x < 0) s.x = canvas.width;
           if (s.x > canvas.width) s.x = 0;
           if (s.y < 0) s.y = canvas.height;
           if (s.y > canvas.height) s.y = 0;
 
-          const alpha = s.a * (0.45 + 0.55 * Math.sin(t * s.speed + s.phase));
+          const alpha = s.baseAlpha * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+          let color;
+          if (s.hue === 'blue-bright')  color = `rgba(137,207,255,${alpha})`;
+          else if (s.hue === 'blue')    color = `rgba(100,170,255,${alpha})`;
+          else if (s.hue === 'warm')    color = `rgba(255,240,200,${alpha})`;
+          else                          color = `rgba(235,230,255,${alpha})`;
+
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          // mix of white-blue and warm white stars
-          const warm = s.phase > Math.PI;
-          ctx.fillStyle = warm
-            ? `rgba(255,245,220,${alpha})`
-            : `rgba(200,210,255,${alpha})`;
+          ctx.fillStyle = color;
           ctx.fill();
+
+          if (s.r > 1.1) {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r * 2.8, 0, Math.PI * 2);
+            ctx.fillStyle = s.hue === 'warm'
+              ? `rgba(255,220,150,${alpha * 0.10})`
+              : `rgba(140,190,255,${alpha * 0.13})`;
+            ctx.fill();
+          }
         });
 
         requestAnimationFrame(draw);
       }
 
       resize();
-      createStars(220);
-      window.addEventListener('resize', () => { resize(); createStars(220); });
+      createStars(320);
+      window.addEventListener('resize', () => { resize(); createStars(320); });
       requestAnimationFrame(draw);
     })();
 
     /* ── SIDEBAR TOGGLE ── */
-    const sidebar   = document.getElementById('sidebar');
-    const page      = document.getElementById('page');
-    const toggle    = document.getElementById('nav-toggle');
-    let isOpen      = true; // open by default
+    const sidebar  = document.getElementById('sidebar');
+    const page     = document.getElementById('page');
+    const toggle   = document.getElementById('nav-toggle');
+    let isOpen     = true;
 
     toggle.addEventListener('click', () => {
       isOpen = !isOpen;
       sidebar.classList.toggle('closed', !isOpen);
       page.classList.toggle('expanded', !isOpen);
-      toggle.textContent = isOpen ? '☰' : '☰';
     });
 
-    /* ── SIDEBAR NAV ACTIVE ── */
+    /* ── ACTIVE LINK ON SCROLL ── */
     const sideLinks = document.querySelectorAll('#sidebar-links a');
     const sections  = document.querySelectorAll('section[id]');
 
@@ -1081,7 +1020,7 @@
       sideLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
     });
 
-    /* ── MOBILE: close sidebar on link click ── */
+    /* ── CLOSE ON MOBILE TAP ── */
     sideLinks.forEach(a => {
       a.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
