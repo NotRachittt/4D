@@ -598,7 +598,7 @@ git push
       font-family: var(--display);
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       letter-spacing: 0.03em;
-      color: #ffffff;
+      color: #13bbdc;
       margin-bottom: 0.5rem;
       line-height: 0.95;
     }
@@ -612,6 +612,42 @@ git push
       margin-bottom: 3rem;
       margin-top: 0.75rem;
     }
+
+    .glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.glitch::before {
+  color: #ff004c;
+  animation: glitch1 3s infinite;
+}
+.glitch::after {
+  color: #00fff9;
+  animation: glitch2 2s infinite;
+}
+@keyframes glitch1 {
+  0%, 90%, 100% { opacity: 0; transform: none; }
+  92% { opacity: 0.8; transform: translate(-3px, 1px) skewX(-2deg); clip-path: inset(20% 0 50% 0); }
+  94% { opacity: 0.6; transform: translate(3px, -1px) skewX(2deg); clip-path: inset(60% 0 10% 0); }
+  96% { opacity: 0.8; transform: translate(-2px, 2px); clip-path: inset(40% 0 30% 0); }
+  98% { opacity: 0; }
+}
+@keyframes glitch2 {
+  0%, 91%, 100% { opacity: 0; transform: none; }
+  93% { opacity: 0.7; transform: translate(3px, -1px) skewX(1deg); clip-path: inset(50% 0 20% 0); }
+  95% { opacity: 0.5; transform: translate(-3px, 1px); clip-path: inset(10% 0 70% 0); }
+  97% { opacity: 0.7; transform: translate(2px, -2px) skewX(-1deg); clip-path: inset(30% 0 40% 0); }
+  99% { opacity: 0; }
+}
 
     /* ══ CONTENT BLOCKS ══ */
     .content-block {
@@ -915,6 +951,42 @@ git push
         gap: 0.75rem;
       }
     }
+
+    #fs-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: rgba(5, 10, 30, 0.85);
+  border: 1px solid var(--border-hi);
+  color: var(--blue-bright);
+  font-size: 1.4rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 999;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s;
+}
+#fs-btn:hover {
+  background: rgba(106, 186, 255, 0.15);
+  box-shadow: 0 0 16px rgba(106, 186, 255, 0.3);
+}
+
+/* Scroll Bar Adjustment */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-dim);
+}
   </style>
 </head>
 
@@ -1014,11 +1086,11 @@ git push
 
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <section id="begin">
       <p class="section-label">Reality</p>
       <h2 class="section-title">is 4d even real ?</h2>
-      <p class="section-sub">A journey beyond the visible universe...</p>
+      <p class="section-sub glitch" data-text="A journey beyond the visible universe...">A journey beyond the visible universe...</p>
 
       <!-- Side by side layout -->
       <div style="display: flex; align-items: flex-start; gap: 40px; flex-wrap: nowrap;">
@@ -1056,7 +1128,7 @@ git push
 
       </div>
     </section>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <div class="divider"></div>
 
     <section id="time">
@@ -1067,15 +1139,15 @@ git push
       <h2 class="section-title">4th dimension as time ?</h2>
       <p class="section-sub">What if time itself is the Fourth Dimension?</p>
       <div class="content-block">
-        <div class="content-block-eyebrow">Elaborating why 4D is possible</div>
-        <div class="content-block-title">4D Logic</div>
+        <!-- <div class="content-block-eyebrow">Elaborating why 4D is possible</div>
+        <div class="content-block-title">4D Logic</div> -->
         <p></p>
         <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best.</p>
       </div>
       <div class="content-block">
       </div>
     </section>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 01 -->
     <section id="newtonian">
       <p class="section-label">Chapter 01</p>
@@ -1098,7 +1170,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 02 -->
     <section id="maxwell">
       <p class="section-label">Chapter 02</p>
@@ -1120,7 +1192,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 03 -->
     <section id="michelson">
       <p class="section-label">Chapter 03</p>
@@ -1142,7 +1214,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 04 -->
     <section id="lorentz">
       <p class="section-label">Chapter 04</p>
@@ -1164,7 +1236,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 05 -->
     <section id="special">
       <p class="section-label">Chapter 05</p>
@@ -1185,7 +1257,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 06 -->
     <section id="minkowski">
       <p class="section-label">Chapter 06</p>
@@ -1206,7 +1278,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 07 -->
     <section id="general">
       <p class="section-label">Chapter 07</p>
@@ -1222,7 +1294,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 08 -->
     <section id="tensor">
       <p class="section-label">Chapter 08</p>
@@ -1245,7 +1317,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 09 -->
     <section id="quantum">
       <p class="section-label">Chapter 09</p>
@@ -1260,7 +1332,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 10 -->
     <section id="quantum-field">
       <p class="section-label">Chapter 10</p>
@@ -1275,7 +1347,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 11 -->
     <section id="kaluza">
       <p class="section-label">Chapter 11</p>
@@ -1291,7 +1363,7 @@ git push
     </section>
 
     <div class="divider"></div>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 12 -->
     <section id="string">
       <p class="section-label">Chapter 12</p>
@@ -1305,7 +1377,7 @@ git push
         </p>
       </div>
     </section>
-
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <div class="divider"></div>
 
     <!-- FOOTER -->
@@ -1316,6 +1388,8 @@ git push
     </footer>
 
   </div><!-- /page -->
+
+  <button id="fs-btn" title="Fullscreen">⛶</button>
 
   <script>
     /* ── GALAXY STARFIELD ── */
@@ -1443,6 +1517,14 @@ git push
         }
       });
     });
+
+    document.getElementById('fs-btn').addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
   </script>
 
 </body>
