@@ -564,12 +564,12 @@ git push
       max-width: 1150px;
       padding-left: 3.5rem;
       padding-right: 2rem;
-      padding-bottom: 4rem; 
+      padding-bottom: 4rem;
     }
 
     #time {
-  padding-top: 0rem;
-}
+      padding-top: 0rem;
+    }
 
     .section-label {
       font-family: var(--body);
@@ -614,40 +614,93 @@ git push
     }
 
     .glitch {
-  position: relative;
-}
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-.glitch::before {
-  color: #ff004c;
-  animation: glitch1 3s infinite;
-}
-.glitch::after {
-  color: #00fff9;
-  animation: glitch2 2s infinite;
-}
-@keyframes glitch1 {
-  0%, 90%, 100% { opacity: 0; transform: none; }
-  92% { opacity: 0.8; transform: translate(-3px, 1px) skewX(-2deg); clip-path: inset(20% 0 50% 0); }
-  94% { opacity: 0.6; transform: translate(3px, -1px) skewX(2deg); clip-path: inset(60% 0 10% 0); }
-  96% { opacity: 0.8; transform: translate(-2px, 2px); clip-path: inset(40% 0 30% 0); }
-  98% { opacity: 0; }
-}
-@keyframes glitch2 {
-  0%, 91%, 100% { opacity: 0; transform: none; }
-  93% { opacity: 0.7; transform: translate(3px, -1px) skewX(1deg); clip-path: inset(50% 0 20% 0); }
-  95% { opacity: 0.5; transform: translate(-3px, 1px); clip-path: inset(10% 0 70% 0); }
-  97% { opacity: 0.7; transform: translate(2px, -2px) skewX(-1deg); clip-path: inset(30% 0 40% 0); }
-  99% { opacity: 0; }
-}
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    .glitch::before {
+      color: #ff004c;
+      animation: glitch1 3s infinite;
+    }
+
+    .glitch::after {
+      color: #00fff9;
+      animation: glitch2 2s infinite;
+    }
+
+    @keyframes glitch1 {
+
+      0%,
+      90%,
+      100% {
+        opacity: 0;
+        transform: none;
+      }
+
+      92% {
+        opacity: 0.8;
+        transform: translate(-3px, 1px) skewX(-2deg);
+        clip-path: inset(20% 0 50% 0);
+      }
+
+      94% {
+        opacity: 0.6;
+        transform: translate(3px, -1px) skewX(2deg);
+        clip-path: inset(60% 0 10% 0);
+      }
+
+      96% {
+        opacity: 0.8;
+        transform: translate(-2px, 2px);
+        clip-path: inset(40% 0 30% 0);
+      }
+
+      98% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes glitch2 {
+
+      0%,
+      91%,
+      100% {
+        opacity: 0;
+        transform: none;
+      }
+
+      93% {
+        opacity: 0.7;
+        transform: translate(3px, -1px) skewX(1deg);
+        clip-path: inset(50% 0 20% 0);
+      }
+
+      95% {
+        opacity: 0.5;
+        transform: translate(-3px, 1px);
+        clip-path: inset(10% 0 70% 0);
+      }
+
+      97% {
+        opacity: 0.7;
+        transform: translate(2px, -2px) skewX(-1deg);
+        clip-path: inset(30% 0 40% 0);
+      }
+
+      99% {
+        opacity: 0;
+      }
+    }
 
     /* ══ CONTENT BLOCKS ══ */
     .content-block {
@@ -664,7 +717,7 @@ git push
 
     .content-block-eyebrow {
       font-family: var(--body);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -953,40 +1006,44 @@ git push
     }
 
     #fs-btn {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: rgba(5, 10, 30, 0.85);
-  border: 1px solid var(--border-hi);
-  color: var(--blue-bright);
-  font-size: 1.4rem;
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 999;
-  backdrop-filter: blur(12px);
-  transition: all 0.2s;
-}
-#fs-btn:hover {
-  background: rgba(106, 186, 255, 0.15);
-  box-shadow: 0 0 16px rgba(106, 186, 255, 0.3);
-}
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: rgba(5, 10, 30, 0.85);
+      border: 1px solid var(--border-hi);
+      color: var(--blue-bright);
+      font-size: 1.4rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 999;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s;
+    }
 
-/* Scroll Bar Adjustment */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--blue-dim);
-}
+    #fs-btn:hover {
+      background: rgba(106, 186, 255, 0.15);
+      box-shadow: 0 0 16px rgba(106, 186, 255, 0.3);
+    }
+
+    /* Scroll Bar Adjustment */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--blue-dim);
+    }
   </style>
 </head>
 
@@ -1086,11 +1143,12 @@ git push
 
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <section id="begin">
       <p class="section-label">Reality</p>
       <h2 class="section-title">is 4d even real ?</h2>
-      <p class="section-sub glitch" data-text="A journey beyond the visible universe...">A journey beyond the visible universe...</p>
+      <p class="section-sub glitch" data-text="A journey beyond the visible universe...">A journey beyond the visible
+        universe...</p>
 
       <!-- Side by side layout -->
       <div style="display: flex; align-items: flex-start; gap: 40px; flex-wrap: nowrap;">
@@ -1128,50 +1186,119 @@ git push
 
       </div>
     </section>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <div class="divider"></div>
 
     <section id="time">
     </section>
+
 
     <section id="time">
       <p class="section-label">hypothesis</p>
       <h2 class="section-title">4th dimension as time ?</h2>
       <p class="section-sub">What if time itself is the Fourth Dimension?</p>
-      <div class="content-block">
-        <!-- <div class="content-block-eyebrow">Elaborating why 4D is possible</div>
-        <div class="content-block-title">4D Logic</div> -->
-        <p></p>
-        <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best.</p>
-      </div>
-      <div class="content-block">
-      </div>
-    </section>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-    <!-- CH 01 -->
-    <section id="newtonian">
-      <p class="section-label">Chapter 01</p>
-      <h2 class="section-title">Newtonian Mechanics</h2>
-      <p class="section-sub">Where it all began — absolute space, absolute time, and three tidy dimensions.</p>
-      <div class="content-block">
-        <div class="content-block-eyebrow">Absolute Space & Time</div>
-        <div class="content-block-title">The Classical Picture</div>
-        <p>Your content goes here. Write about Newton's laws, absolute space, and why three dimensions felt complete.
-          Use <strong>highlighted text</strong> for key terms.</p>
-        <p>Add a second paragraph expanding on the idea. Keep it readable — short paragraphs work best.</p>
-      </div>
-      <div class="content-block">
-        <div class="content-block-eyebrow">Where It Breaks</div>
-        <div class="content-block-title">The First Cracks</div>
-        <p>Describe the problems that Newtonian mechanics couldn't solve — the constancy of the speed of light, the
-          Michelson-Morley experiment, and what that meant for absolute space.</p>
-        <div class="formula">F = ma &nbsp;·&nbsp; p = mv &nbsp;·&nbsp; E = ½mv²</div>
+
+      <div
+        style="display: flex; align-items: flex-start; gap: 40px; flex-wrap: nowrap; justify-content: space-between;">
+
+        <!-- Left: Content -->
+        <div style="flex: 1 1 300px; min-width: 280px;">
+          <div class="content-block">
+            <p>Whether time can truly be considered the <strong>4th Dimension</strong> is a topic that can lead to a lot
+              of
+              discussion. However, we do have several scientific theories and logical explanations that help us explore
+              whether time could actually be the fourth dimension.</p>
+
+            <p>To begin with the first piece of evidence, let us understand the <strong>Special Theory of
+                Relativity</strong> proposed by Albert Einstein to explain the relationship between space and time.</p>
+
+            <div class="content-block-eyebrow">His theory states: “The faster you move through space, the slower you
+              move
+              through time — and vice versa.”</div>
+
+            <p>As we continue, we will explore more such theories and concepts that help explain the possibility of the
+              <strong>4th Dimension</strong>. So, let us begin with the ideas that strongly suggest that <strong>time
+                could
+                be the fourth dimension</strong>.
+            </p>
+            </p>
+            <br>
+            <div class="content-block-title">Scientific Evidence for Time as the Fourth Dimension</div>
+            <p>1) While using <strong>Google Maps</strong>, the GPS satellites orbiting around <strong>20,000 km above
+                Earth</strong> experience weaker gravity compared to Earth’s surface. Because of this, time moves
+              slightly
+              faster for them. At the same time, their high speed in space also causes time to slow down due to
+              <strong>time
+                dilation</strong> predicted by relativity.
+
+              These differences in time are continuously corrected through precise calculations inside the satellite
+              systems. If scientists did not apply these corrections, GPS locations could become inaccurate by several
+              kilometers, causing maps and navigation to fail. This serves as a direct real-world proof that
+              <strong>time
+                dilation is real</strong>.
+            </p>
+            <br>
+            <p>2. Another powerful piece of evidence comes from the <strong>Muon Experiment</strong>, often considered
+              one
+              of the clearest proofs of <strong>time dilation</strong>. Muons are tiny <strong>subatomic
+                particles</strong>
+              created when cosmic rays collide with Earth’s upper atmosphere, nearly <strong>100 km above the
+                surface</strong>.
+
+              Normally, muons have an extremely short lifespan and should only be able to travel around <strong>600
+                meters</strong> before decaying. Theoretically, they should never be able to reach Earth’s surface.
+              However,
+              scientists consistently detect muons at ground level.
+
+              This happens because muons travel at speeds close to the <strong>speed of light</strong>. Due to
+              relativity,
+              time slows down dramatically for them. As a result, their very short lifetime stretches long enough for
+              them
+              to travel many kilometers and successfully reach Earth before decaying.
+            </p>
+            <br>
+            <p>3) The <strong>Hafele–Keating Experiment</strong> gave another real-world proof of <strong>time
+                dilation</strong>. In <strong>1971</strong>, scientists Joseph Hafele and Richard Keating placed highly
+              accurate <strong>atomic clocks</strong> inside airplanes and flew them around Earth, while another
+              identical
+              clock remained on the ground.
+              <br>
+              <u> # According to Albert Einstein’s relativity:</u>
+              <br>
+              - faster motion slows time <br>
+              - weaker gravity speeds time up <br>
+              <img src="https://cdn.eso.org/images/large/eso2208-eht-mwb.jpg" width="400" height="500"
+                style="float: right; margin-top: 1.5rem; margin-right: -520px; border-radius:24px; border:3px solid #5ba4f5; box-shadow:0 0 0 6px #1a3a6e, #5ba4f5; background:#111; object-fit: cover;">
+              After the flights, the airplane clocks showed small but measurable time differences exactly matching
+              Einstein’s predictions. This proved that <strong>time is actually affected by speed and gravity</strong>,
+              making time dilation a real physical effect, not just a theory.
+            </p>
+            <br>
+            <p>
+              4) In <strong>2019</strong>, scientists captured the first image of a <strong>black hole</strong> in the
+              Messier 87 galaxy using the Event Horizon Telescope. Near a black hole, gravity becomes so intense that
+              <strong>spacetime bends</strong> and time slows down dramatically. <br>
+
+              Because of this curved spacetime, light bends around the black hole instead of traveling in a straight
+              line,
+              creating the glowing ring and dark shadow seen in the image.
+
+              The behavior of the light matched Albert
+              Einstein’s predictions with remarkable accuracy. <br>
+
+              If spacetime curvature were not real, the image and light pattern around the black hole would not match
+              what
+              scientists observed.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 02 -->
+    <div class="divider"></div>
     <section id="maxwell">
       <p class="section-label">Chapter 02</p>
       <h2 class="section-title">Special Relativity</h2>
@@ -1192,7 +1319,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 03 -->
     <section id="michelson">
       <p class="section-label">Chapter 03</p>
@@ -1214,7 +1341,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 04 -->
     <section id="lorentz">
       <p class="section-label">Chapter 04</p>
@@ -1236,7 +1363,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 05 -->
     <section id="special">
       <p class="section-label">Chapter 05</p>
@@ -1257,7 +1384,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 06 -->
     <section id="minkowski">
       <p class="section-label">Chapter 06</p>
@@ -1278,7 +1405,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 07 -->
     <section id="general">
       <p class="section-label">Chapter 07</p>
@@ -1294,7 +1421,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 08 -->
     <section id="tensor">
       <p class="section-label">Chapter 08</p>
@@ -1317,7 +1444,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 09 -->
     <section id="quantum">
       <p class="section-label">Chapter 09</p>
@@ -1332,7 +1459,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 10 -->
     <section id="quantum-field">
       <p class="section-label">Chapter 10</p>
@@ -1347,7 +1474,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 11 -->
     <section id="kaluza">
       <p class="section-label">Chapter 11</p>
@@ -1363,7 +1490,7 @@ git push
     </section>
 
     <div class="divider"></div>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- CH 12 -->
     <section id="string">
       <p class="section-label">Chapter 12</p>
@@ -1377,7 +1504,7 @@ git push
         </p>
       </div>
     </section>
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <div class="divider"></div>
 
     <!-- FOOTER -->
@@ -1519,12 +1646,12 @@ git push
     });
 
     document.getElementById('fs-btn').addEventListener('click', () => {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-});
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
   </script>
 
 </body>
