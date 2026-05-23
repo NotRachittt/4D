@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Space vs Time</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#05050f;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Poppins',sans-serif;}
+.wrap{display:flex;gap:20px;padding:1.5rem 0; flex-direction: column;}
+.panel{flex:1;border:1px solid rgba(100,170,255,0.2);border-radius:16px;padding:1.25rem;background:rgba(8,8,24,0.9);}
+.panel-title{font-size:11px;font-weight:600;color:rgba(106,186,255,0.8);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;}
+.panel-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;text-align:center;}
+canvas{display:block;border-radius:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <div class="panel-title">Space — Spatial Dimension</div>
+    <canvas id="sc" width="320" height="280"></canvas>
+    <div class="panel-sub">Sphere moves freely across X, Y, Z axes</div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Time — 4th Dimension</div>
+    <canvas id="tc" width="320" height="280"></canvas>
+    <div class="panel-sub">Object moves only forward — no return</div>
+  </div>
+</div>
+<script>
+const sc=document.getElementById('sc'),tc=document.getElementById('tc');
+const sCtx=sc.getContext('2d'),tCtx=tc.getContext('2d');
+
+const BG='#08081a';
+const DIM='rgba(255,255,255,0.22)';
+const TC='rgba(255,255,255,0.55)';
+
+function hexA(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
+
+function arrow(ctx,x1,y1,x2,y2,col,lw=1.8){
+  ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1);
+  ctx.beginPath();ctx.fillStyle=col;
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-8*Math.cos(a-0.4),y2-8*Math.sin(a-0.4));
+  ctx.lineTo(x2-8*Math.cos(a+0.4),y2-8*Math.sin(a+0.4));
+  ctx.closePath();ctx.fill();
+}
+
+// isometric with rotation
+function iso(x,y,z,rot){
+  const cosR=Math.cos(rot),sinR=Math.sin(rot);
+  const rx=x*cosR-y*sinR;
+  const ry=x*sinR+y*cosR;
+  const ang=Math.PI/6;
+  const sx=rx*Math.cos(ang)-ry*Math.cos(ang);
+  const sy=rx*Math.sin(ang)+ry*Math.sin(ang)-z;
+  return {x:sx,y:sy};
+}
+
+let frame=0;
+
+function drawSpace(f){
+  const W=sc.width,H=sc.height;
+  sCtx.clearRect(0,0,W,H);
+  sCtx.fillStyle=BG;
+  sCtx.beginPath();sCtx.roundRect(0,0,W,H,10);sCtx.fill();
+
+  const ox=W/2,oy=H/2+10;
+  const len=100;
+  const rot=f*0.008; // slow auto rotation
+
+  const X=iso(len,0,0,rot),Y=iso(0,len,0,rot),Z=iso(0,0,len,rot);
+  const Xn=iso(-30,0,0,rot),Yn=iso(0,-30,0,rot),Zn=iso(0,0,-30,rot);
+
+  // negative dashed
+  sCtx.setLineDash([4,5]);
+  sCtx.strokeStyle=DIM;sCtx.lineWidth=1;
+  [[Xn,{x:0,y:0}],[Yn,{x:0,y:0}],[Zn,{x:0,y:0}]].forEach(([s])=>{
+    sCtx.beginPath();sCtx.moveTo(ox+s.x,oy+s.y);sCtx.lineTo(ox,oy);sCtx.stroke();
+  });
+  sCtx.setLineDash([]);
+
+  arrow(sCtx,ox,oy,ox+X.x,oy+X.y,'#e24b4a',2);
+  arrow(sCtx,ox,oy,ox+Y.x,oy+Y.y,'#1d9e75',2);
+  arrow(sCtx,ox,oy,ox+Z.x,oy+Z.y,'#378add',2);
+
+  sCtx.font='bold 13px sans-serif';sCtx.textAlign='center';
+  sCtx.fillStyle='#e24b4a';sCtx.fillText('X',ox+X.x+10,oy+X.y+4);
+  sCtx.fillStyle='#1d9e75';sCtx.fillText('Y',ox+Y.x-12,oy+Y.y+4);
+  sCtx.fillStyle='#378add';sCtx.fillText('Z',ox+Z.x+2,oy+Z.y-10);
+
+  // sphere motion — all 3 axes
+  const t=f*0.02;
+  const r=60;
+  const bx=r*Math.sin(t)*Math.cos(t*0.7);
+  const by=r*Math.sin(t*0.5+1)*Math.cos(t*0.4+0.5);
+  const bz=r*Math.cos(t*0.6+0.8)*Math.sin(t*0.3+1.2);
+
+  // trail
+  for(let i=0;i<90;i++){
+    const pt=f*0.02-(90-i)*0.013;
+    const tx=r*Math.sin(pt)*Math.cos(pt*0.7);
+    const ty2=r*Math.sin(pt*0.5+1)*Math.cos(pt*0.4+0.5);
+    const tz=r*Math.cos(pt*0.6+0.8)*Math.sin(pt*0.3+1.2);
+    const p=iso(tx,ty2,tz,rot);
+    const alpha=(i/90)*0.45;
+    sCtx.beginPath();sCtx.arc(ox+p.x,oy+p.y,2.5,0,Math.PI*2);
+    sCtx.fillStyle=`rgba(155,127,255,${alpha})`;sCtx.fill();
+  }
+
+  const bp=iso(bx,by,bz,rot);
+  const grad=sCtx.createRadialGradient(ox+bp.x,oy+bp.y,0,ox+bp.x,oy+bp.y,18);
+  grad.addColorStop(0,'rgba(155,127,255,0.4)');grad.addColorStop(1,'rgba(155,127,255,0)');
+  sCtx.beginPath();sCtx.arc(ox+bp.x,oy+bp.y,18,0,Math.PI*2);sCtx.fillStyle=grad;sCtx.fill();
+  sCtx.beginPath();sCtx.arc(ox+bp.x,oy+bp.y,10,0,Math.PI*2);
+  sCtx.fillStyle='#9b7fff';sCtx.fill();
+
+  sCtx.beginPath();sCtx.arc(ox,oy,3,0,Math.PI*2);sCtx.fillStyle=DIM;sCtx.fill();
+
+  // legend
+  sCtx.font='11px sans-serif';sCtx.textAlign='left';
+  const items=[['#e24b4a','X axis'],['#1d9e75','Y axis'],['#378add','Z axis'],['#9b7fff','object']];
+  items.forEach((item,i)=>{
+    sCtx.beginPath();sCtx.arc(14,H-58+i*15,4,0,Math.PI*2);sCtx.fillStyle=item[0];sCtx.fill();
+    sCtx.fillStyle=TC;sCtx.fillText(item[1],24,H-54+i*15);
+  });
+}
+
+function drawTime(f){
+  const W=tc.width,H=tc.height;
+  tCtx.clearRect(0,0,W,H);
+  tCtx.fillStyle=BG;
+  tCtx.beginPath();tCtx.roundRect(0,0,W,H,10);tCtx.fill();
+
+  const margin=44,axisY=H/2;
+  const axisStart=margin,axisEnd=W-margin;
+
+  tCtx.beginPath();tCtx.strokeStyle=DIM;tCtx.lineWidth=1.5;
+  tCtx.moveTo(axisStart,axisY);tCtx.lineTo(axisEnd,axisY);tCtx.stroke();
+  arrow(tCtx,axisEnd-2,axisY,axisEnd+2,axisY,DIM,1.5);
+
+  tCtx.font='bold 12px sans-serif';tCtx.textAlign='center';
+  tCtx.fillStyle=TC;tCtx.fillText('T  (time axis)',W/2,axisY+34);
+
+  // ticks
+  const ticks=6;
+  const spacing=(axisEnd-axisStart)/ticks;
+  for(let i=0;i<=ticks;i++){
+    const tx=axisStart+i*spacing;
+    tCtx.beginPath();tCtx.strokeStyle=DIM;tCtx.lineWidth=1;
+    tCtx.moveTo(tx,axisY-5);tCtx.lineTo(tx,axisY+5);tCtx.stroke();
+    if(i===0){tCtx.font='10px sans-serif';tCtx.textAlign='center';tCtx.fillStyle=DIM;tCtx.fillText('start',tx,axisY+18);}
+    if(i===ticks){tCtx.font='10px sans-serif';tCtx.textAlign='center';tCtx.fillStyle=DIM;tCtx.fillText('future →',tx,axisY+18);}
+  }
+
+  // object moves forward, loops
+  const progress=(f*0.45)%(axisEnd-axisStart+20);
+  const objX=axisStart+progress;
+
+  // grey trail (past)
+  const trailLen=Math.min(progress,130);
+  for(let i=0;i<trailLen;i++){
+    const tx=objX-i;
+    const alpha=(1-i/trailLen)*0.4;
+    tCtx.beginPath();tCtx.arc(tx,axisY,4,0,Math.PI*2);
+    tCtx.fillStyle=`rgba(120,119,112,${alpha})`;tCtx.fill();
+  }
+
+  if(objX<=axisEnd+10){
+    const g=tCtx.createRadialGradient(objX,axisY,0,objX,axisY,18);
+    g.addColorStop(0,'rgba(55,138,221,0.35)');g.addColorStop(1,'rgba(55,138,221,0)');
+    tCtx.beginPath();tCtx.arc(objX,axisY,18,0,Math.PI*2);tCtx.fillStyle=g;tCtx.fill();
+    tCtx.beginPath();tCtx.arc(objX,axisY,10,0,Math.PI*2);tCtx.fillStyle='#378add';tCtx.fill();
+    if(objX<axisEnd-22) arrow(tCtx,objX+13,axisY,objX+28,axisY,hexA('#378add',0.85),1.5);
+    tCtx.font='bold 11px sans-serif';tCtx.textAlign='center';
+    tCtx.fillStyle='#378add';tCtx.fillText('now',objX,axisY-20);
+  }
+
+  // cannot return label
+  tCtx.font='11px sans-serif';tCtx.textAlign='center';
+  tCtx.fillStyle=hexA('#e24b4a',0.75);
+  tCtx.fillText('← cannot return',W/2,axisY-42);
+  tCtx.beginPath();tCtx.setLineDash([4,4]);
+  tCtx.strokeStyle=hexA('#e24b4a',0.3);tCtx.lineWidth=1;
+  tCtx.moveTo(margin,axisY-32);tCtx.lineTo(W-margin,axisY-32);tCtx.stroke();
+  tCtx.setLineDash([]);
+}
+
+function loop(){
+  drawSpace(frame);
+  drawTime(frame);
+  frame++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
