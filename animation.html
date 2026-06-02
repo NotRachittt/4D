@@ -74,13 +74,9 @@ const groundY = cy;
 
 const boxW = 50, boxH = 50;
 
-// Box rests on the positive X axis, in front of man
-// "On the X axis" means its bottom sits at groundY, center at some +x from man
 const baseX = manX + 130;
-const baseY = groundY - 50/2; // center Y so box sits on axis
+const baseY = groundY - 50/2;
 
-// Animation: total cycle 360 frames (~6s at 60fps, a bit slower than before)
-// Sequence: rest(30) → up(70) → back(50) → rest(20) → right(70) → back(50) → rest(20) → left(70) → back(50) → rest(20) → down(70) → back(50) → rest(10)
 const SEQ = [
   { dur: 30,  dx: 0,   dy: 0   }, // rest at origin
   { dur: 70,  dx: 0,   dy: -65 }, // go up
@@ -99,14 +95,12 @@ const SEQ = [
 
 const totalDur = SEQ.reduce((s,x)=>s+x.dur, 0);
 
-// Precompute cumulative starts
 let cumulative = [];
 let acc = 0;
 for (let s of SEQ) { cumulative.push(acc); acc += s.dur; }
 
 function getBoxOffset(frame) {
   const f = frame % totalDur;
-  // Find which segment we're in
   let seg = SEQ.length - 1;
   for (let i = 0; i < SEQ.length; i++) {
     if (f < cumulative[i] + SEQ[i].dur) { seg = i; break; }
@@ -114,9 +108,7 @@ function getBoxOffset(frame) {
   const s = SEQ[seg];
   const localF = f - cumulative[seg];
   const p = ease(localF / s.dur);
-
-  // For move segments (even index>=1), interpolate from prev endpoint to this endpoint
-  // prev endpoint is always (0,0) for return segs, or the displacement for move segs
+  
   let prevDx = 0, prevDy = 0;
   if (seg > 0) {
     const ps = SEQ[seg-1];
